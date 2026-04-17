@@ -16,7 +16,7 @@ export default function ModelsReport({ mlData }) {
     <div className="space-y-6">
       <div className="overflow-hidden rounded-lg bg-surface-700">
         <table className="w-full text-left text-sm">
-          <thead className="bg-surface-800 text-slate-300"><tr><th className="p-3">Rank</th><th className="p-3">Model</th><th className="p-3">Primary Metric</th><th className="p-3">F1</th><th className="p-3">Train Time</th><th className="p-3">Tuned</th><th className="p-3">Status</th></tr></thead>
+          <thead className="bg-slate-50 border-b border-slate-200"><tr><th className="p-3 text-slate-900 font-semibold">Rank</th><th className="p-3 text-slate-900 font-semibold">Model</th><th className="p-3 text-slate-900 font-semibold">Primary Metric</th><th className="p-3 text-slate-900 font-semibold">F1</th><th className="p-3 text-slate-900 font-semibold">Train Time</th><th className="p-3 text-slate-900 font-semibold">Tuned</th><th className="p-3 text-slate-900 font-semibold">Status</th></tr></thead>
           <tbody>
             {models.map((model) => {
               const metrics = model.tuned_metrics && Object.keys(model.tuned_metrics).length ? model.tuned_metrics : model.metrics || {}
@@ -25,11 +25,11 @@ export default function ModelsReport({ mlData }) {
                 <tr key={model.name} onClick={() => setExpanded(expanded === model.name ? null : model.name)} className={`cursor-pointer border-t border-surface-600 ${rankClass}`}>
                   <td className="p-3 text-white">{model.rank || '-'}</td>
                   <td className="p-3 text-white">{model.name}{expanded === model.name ? <MetricsGrid metrics={metrics} /> : null}</td>
-                  <td className="p-3 text-slate-300">{format(metrics[primary])}</td>
-                  <td className="p-3 text-slate-300">{format(metrics.f1_weighted)}</td>
-                  <td className="p-3 text-slate-300">{format(model.training_time_sec)}s</td>
-                  <td className="p-3">{model.tuned ? <span className="rounded bg-amber-500/20 px-2 py-1 text-xs text-amber-200">TUNED</span> : <span className="text-slate-500">No</span>}</td>
-                  <td className="p-3">{model.error ? <span title={model.error} className="rounded bg-red-500/20 px-2 py-1 text-xs text-red-200">FAILED</span> : <span className="rounded bg-emerald-500/20 px-2 py-1 text-xs text-emerald-200">OK</span>}</td>
+                  <td className="p-3 text-slate-700">{format(metrics[primary])}</td>
+                  <td className="p-3 text-slate-700">{format(metrics.f1_weighted)}</td>
+                  <td className="p-3 text-slate-700">{format(model.training_time_sec)}s</td>
+                  <td className="p-3">{model.tuned ? <span className="rounded bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">TUNED</span> : <span className="text-slate-500">No</span>}</td>
+                  <td className="p-3">{model.error ? <span title={model.error} className="rounded bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">FAILED</span> : <span className="rounded bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">OK</span>}</td>
                 </tr>
               )
             })}
@@ -56,8 +56,8 @@ export default function ModelsReport({ mlData }) {
         </div>
       </div>
       {mlData.problem_type === 'classification' && mlData.confusion_matrix?.length ? <ConfusionMatrix matrix={mlData.confusion_matrix} /> : null}
-      <div className="rounded-lg bg-surface-700 p-5 text-sm text-slate-300">
-        <h3 className="mb-3 font-semibold text-white">Preprocessing Notes</h3>
+      <div className="rounded-lg bg-slate-50 border border-slate-200 p-5 text-sm text-slate-700">
+        <h3 className="mb-3 font-semibold text-slate-900">Preprocessing Notes</h3>
         <p>{mlData.preprocessing_notes}</p>
         <p className="mt-2">Scaler: {mlData.scaler_used} | SMOTE: {mlData.smote_applied ? 'Applied' : 'Not applied'} | Train/Test: {mlData.train_size}/{mlData.test_size} | Imbalance: {mlData.imbalance_ratio}</p>
       </div>

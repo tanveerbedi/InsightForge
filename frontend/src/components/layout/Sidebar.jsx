@@ -23,10 +23,10 @@ export default function Sidebar() {
             to={to}
             end={end}
             className={({ isActive }) =>
-              `flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition ${isActive ? 'border-l-2 border-brand-500 bg-surface-700 text-white' : 'text-slate-400 hover:bg-surface-800 hover:text-white'}`
+              `flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-all duration-200 ${isActive ? 'border-l-2 border-brand-500 bg-surface-700 text-white' : 'text-slate-400 hover:bg-surface-800 hover:text-white group'}`
             }
           >
-            <Icon className="h-5 w-5" />
+            <Icon className="h-5 w-5 transition-all duration-200 group-hover:text-indigo-400" />
             {label}
           </NavLink>
         ))}

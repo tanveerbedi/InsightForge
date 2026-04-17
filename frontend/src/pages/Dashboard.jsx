@@ -28,18 +28,18 @@ export default function Dashboard() {
 
 function RecentTable({ runs }) {
   return (
-    <div className="overflow-hidden rounded-lg bg-surface-700">
-      <h2 className="p-5 text-lg font-semibold text-white">Recent Analyses</h2>
+    <div className="overflow-hidden rounded-lg bg-white border border-slate-200">
+      <h2 className="p-5 text-lg font-semibold text-slate-900">Recent Analyses</h2>
       <table className="w-full text-left text-sm">
-        <thead className="bg-surface-800 text-slate-300"><tr><th className="p-3">Dataset Name</th><th className="p-3">Date</th><th className="p-3">Status</th><th className="p-3">Best Model</th><th className="p-3">Score</th><th className="p-3">Action</th></tr></thead>
-        <tbody>{runs.map((run) => <tr key={run.run_id} className="border-t border-surface-600"><td className="p-3 text-white">{run.dataset_name}</td><td className="p-3 text-slate-400">{new Date(run.created_at * 1000).toLocaleString()}</td><td className="p-3"><Status status={run.status} /></td><td className="p-3 text-slate-300">{run.best_model}</td><td className="p-3 text-slate-300">{typeof run.score === 'number' ? run.score.toFixed(4) : 'N/A'}</td><td className="p-3"><Link to={`/dashboard/results/${run.run_id}`} className="text-brand-300 hover:text-brand-100">View Results</Link></td></tr>)}</tbody>
+        <thead className="bg-slate-50 border-b border-slate-200"><tr><th className="p-3 text-slate-900 font-semibold">Dataset Name</th><th className="p-3 text-slate-900 font-semibold">Date</th><th className="p-3 text-slate-900 font-semibold">Status</th><th className="p-3 text-slate-900 font-semibold">Best Model</th><th className="p-3 text-slate-900 font-semibold">Score</th><th className="p-3 text-slate-900 font-semibold">Action</th></tr></thead>
+        <tbody>{runs.map((run) => <tr key={run.run_id} className="border-t border-slate-200 hover:bg-slate-50"><td className="p-3 text-slate-900">{run.dataset_name}</td><td className="p-3 text-slate-600">{new Date(run.created_at * 1000).toLocaleString()}</td><td className="p-3"><Status status={run.status} /></td><td className="p-3 text-slate-700">{run.best_model}</td><td className="p-3 text-slate-700">{typeof run.score === 'number' ? run.score.toFixed(4) : 'N/A'}</td><td className="p-3"><Link to={`/dashboard/results/${run.run_id}`} className="text-brand-600 hover:text-brand-700 font-semibold">View Results</Link></td></tr>)}</tbody>
       </table>
     </div>
   )
 }
 
 function Status({ status }) {
-  const cls = status === 'completed' ? 'bg-emerald-500/20 text-emerald-200' : status === 'failed' ? 'bg-red-500/20 text-red-200' : 'bg-amber-500/20 text-amber-200'
+  const cls = status === 'completed' ? 'bg-emerald-100 text-emerald-700 font-semibold' : status === 'failed' ? 'bg-red-100 text-red-700 font-semibold' : 'bg-amber-100 text-amber-700 font-semibold'
   return <span className={`rounded px-2 py-1 text-xs ${cls}`}>{status}</span>
 }
 

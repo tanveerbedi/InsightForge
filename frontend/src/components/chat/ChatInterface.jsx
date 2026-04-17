@@ -53,7 +53,7 @@ export default function ChatInterface({ runId, runMeta }) {
           <div className="mb-3 flex flex-wrap gap-2">{chips.map((chip) => <button key={chip} type="button" onClick={() => onSend(chip)} className="rounded-full bg-surface-700 px-3 py-1 text-xs text-slate-300 hover:text-white">{chip}</button>)}</div>
           <div className="flex gap-3">
             <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={2} className="flex-1 resize-none rounded-lg bg-surface-700 p-3 text-white outline-none ring-brand-500 focus:ring-2" placeholder="Ask about this analysis..." />
-            <button type="button" onClick={() => onSend()} disabled={loading || !input.trim()} className="rounded-lg bg-brand-500 px-4 text-white disabled:opacity-50">{loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}</button>
+            <button type="button" onClick={() => onSend()} disabled={loading || !input.trim()} className="rounded-lg bg-brand-500 px-4 text-white disabled:opacity-50 transition-all duration-200 hover:bg-brand-600 hover:shadow-lg">{loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}</button>
           </div>
         </div>
       </main>

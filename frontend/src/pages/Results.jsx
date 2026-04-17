@@ -30,14 +30,14 @@ export default function Results() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div><h2 className="text-2xl font-semibold text-white">{result?.dataset_name}</h2><p className="text-sm text-slate-400">{result?.created_at ? new Date(result.created_at * 1000).toLocaleString() : ''}</p></div>
-        <div className="flex items-center gap-3"><span className="rounded bg-emerald-500/20 px-2 py-1 text-xs text-emerald-200">{result?.status}</span><Link to={`/dashboard/chat/${runId}`} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-semibold text-white">Chat With Data</Link></div>
+        <div><h2 className="text-2xl font-semibold text-slate-900">{result?.dataset_name}</h2><p className="text-sm text-slate-500">{result?.created_at ? new Date(result.created_at * 1000).toLocaleString() : ''}</p></div>
+        <div className="flex items-center gap-3"><span className="rounded bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">{result?.status}</span><Link to={`/dashboard/chat/${runId}`} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-semibold text-white">Chat With Data</Link></div>
       </div>
-      <div className="overflow-hidden rounded-lg bg-surface-800">
-        <div className="flex overflow-x-auto border-b border-surface-700">
-          {tabs.map((tab) => <button key={tab} type="button" onClick={() => setActiveTab(tab)} className={`px-5 py-3 text-sm font-medium ${activeTab === tab ? 'border-b-2 border-brand-500 text-white' : 'text-slate-400 hover:text-white'}`}>{tab}</button>)}
+      <div className="overflow-hidden rounded-lg bg-white border border-slate-200">
+        <div className="flex overflow-x-auto border-b border-slate-200">
+          {tabs.map((tab) => <button key={tab} type="button" onClick={() => setActiveTab(tab)} className={`px-5 py-3 text-sm font-medium transition-all duration-200 ${activeTab === tab ? 'border-b-2 border-brand-500 text-slate-900' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'}`}>{tab}</button>)}
         </div>
-        <div className="p-5">
+        <div className="p-5 bg-white">
           {activeTab === 'Plan' ? <PlanTimeline planData={result?.plan_results} /> : null}
           {activeTab === 'Cleaning' ? <CleaningReport cleaningData={result?.cleaning_results} /> : null}
           {activeTab === 'EDA' ? <EDAReport edaData={result?.eda_results} /> : null}

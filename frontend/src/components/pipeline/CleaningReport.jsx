@@ -53,15 +53,15 @@ export default function CleaningReport({ cleaningData }) {
           ) : null}
         </div>
       </div>
-      <div className="overflow-hidden rounded-lg bg-surface-700">
+      <div className="overflow-hidden rounded-lg bg-white border border-slate-200">
         <table className="w-full text-left text-sm">
-          <thead className="bg-surface-800 text-slate-300">
-            <tr><th className="p-3">Column</th><th className="p-3">Original Type</th><th className="p-3">New Type</th></tr>
+          <thead className="bg-slate-50 border-b border-slate-200">
+            <tr><th className="p-3 text-slate-900 font-semibold">Column</th><th className="p-3 text-slate-900 font-semibold">Original Type</th><th className="p-3 text-slate-900 font-semibold">New Type</th></tr>
           </thead>
           <tbody>
             {Object.entries(types).map(([col, value]) => (
-              <tr key={col} className="border-t border-surface-600">
-                <td className="p-3 text-white">{col}</td><td className="p-3 text-slate-400">{value.original}</td><td className="p-3 text-slate-400">{value.cleaned}</td>
+              <tr key={col} className="border-t border-slate-200 odd:bg-white even:bg-slate-50 hover:bg-slate-100">
+                <td className="p-3 text-slate-900 font-medium">{col}</td><td className="p-3 text-slate-700">{value.original}</td><td className="p-3 text-slate-700">{value.cleaned}</td>
               </tr>
             ))}
           </tbody>

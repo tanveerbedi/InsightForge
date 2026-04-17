@@ -119,7 +119,7 @@ function StepIndicator({ step }) {
 }
 
 function Preview({ columns, rows }) {
-  return <div className="overflow-auto rounded-lg bg-surface-700"><table className="min-w-full text-left text-sm"><thead className="bg-surface-800 text-slate-300"><tr>{columns.map((c) => <th key={c} className="p-3">{c}</th>)}</tr></thead><tbody>{rows.map((row, i) => <tr key={i} className="odd:bg-surface-700 even:bg-surface-800/40">{columns.map((c, j) => <td key={c} className="p-3 text-slate-300">{row[j]}</td>)}</tr>)}</tbody></table></div>
+  return <div className="overflow-auto rounded-lg border border-slate-200"><table className="min-w-full text-left text-sm"><thead className="bg-white text-slate-900 border-b border-slate-200"><tr>{columns.map((c) => <th key={c} className="p-3">{c}</th>)}</tr></thead><tbody>{rows.map((row, i) => <tr key={i} className="odd:bg-white even:bg-slate-50 text-slate-800 hover:bg-indigo-50 hover:text-slate-900 transition-colors border-b border-slate-200">{columns.map((c, j) => <td key={c} className="p-3">{row[j]}</td>)}</tr>)}</tbody></table></div>
 }
 
 function Mode({ selected, onClick, icon: Icon, title }) {

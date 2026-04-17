@@ -24,8 +24,8 @@ export default function EDAReport({ edaData }) {
   const firstDist = Object.values(edaData.charts?.distributions || {})[0]
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-100">
-        <CheckCircle2 className="h-5 w-5" />
+      <div className="flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
+        <CheckCircle2 className="h-5 w-5 text-emerald-600" />
         Recommended target: <strong>{edaData.recommended_target || 'Not detected'}</strong>
       </div>
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
