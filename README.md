@@ -312,11 +312,9 @@ MIT License — See LICENSE file for details
 
 ## 👨‍💼 Author
 
-Built with ❤️ by the Netsmartz Data Science team
+Built with ❤️ by the Tanveer Singh
 
-- GitHub: [@netsmartz](https://github.com)
-- Website: [www.netsmartz.com](https://www.netsmartz.com)
-- Support: support@netsmartz.com
+- GitHub: [@Github](https://github.com/tanveerbedi)
 
 ---
 
@@ -329,16 +327,7 @@ Contributions are welcome! Please follow these steps:
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
----
-
-## 📞 Support & Community
-
-- **Issues**: Report bugs on GitHub Issues
-- **Discussions**: Share ideas in GitHub Discussions
-- **Documentation**: Full docs at [docs.insightforge.dev](https://docs.insightforge.dev)
-- **Email**: support@netsmartz.com
-
+6. 
 ---
 
 **Happy analyzing! 🎉**
