@@ -42,7 +42,7 @@ export default function ProgressTracker({ runId }) {
   }, [data?.status, navigate, runId])
 
   if (error) return <ErrorCard title="Progress unavailable" message="Could not load pipeline progress." detail={error.message} />
-  if (data?.status === 'failed') return <ErrorCard title="Pipeline failed" message={data?.error || 'The pipeline stopped before completion.'} detail={JSON.stringify(data?.logs || [], null, 2)} />
+  if (data?.status === 'failed') return <ErrorCard title="Pipeline failed" message={data?.error || 'The pipeline stopped before completion.'} detail={data?.remediation_suggestion || data?.error} onRetry={() => window.history.back()} />
 
   const pct = data?.progress_pct || 0
   const completed = new Set(data?.completed_agents || [])

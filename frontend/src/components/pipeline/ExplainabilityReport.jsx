@@ -37,6 +37,17 @@ export default function ExplainabilityReport({ explainData }) {
           </div>
         ))}
       </div>
+      {explainData.global_insights?.length ? (
+        <div className="grid gap-4 md:grid-cols-2">
+          {explainData.global_insights.map((item) => (
+            <div key={item.feature} className="rounded-lg bg-surface-700 p-5">
+              <p className="text-xs font-semibold text-brand-300">{item.severity}</p>
+              <h3 className="mt-1 font-semibold text-white">{item.feature}</h3>
+              <p className="mt-2 text-sm text-slate-300">{item.insight}</p>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }

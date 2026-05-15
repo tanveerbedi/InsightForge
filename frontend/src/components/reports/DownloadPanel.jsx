@@ -12,7 +12,7 @@ export default function DownloadPanel({ runId }) {
   const [loading, setLoading] = useState(null)
   const trigger = (type) => {
     setLoading(type)
-    window.location.href = `/api/export/${type}/${runId}`
+    window.location.href = `http://localhost:8000/api/export/${type}/${runId}`
     setTimeout(() => setLoading(null), 700)
   }
   return (
@@ -31,4 +31,3 @@ export default function DownloadPanel({ runId }) {
     </div>
   )
 }
-

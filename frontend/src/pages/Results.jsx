@@ -11,7 +11,6 @@ import ModelsReport from '../components/pipeline/ModelsReport'
 import PlanTimeline from '../components/pipeline/PlanTimeline'
 import ProgressTracker from '../components/pipeline/ProgressTracker'
 import DownloadPanel from '../components/reports/DownloadPanel'
-import ErrorCard from '../components/shared/ErrorCard'
 import SkeletonLoader from '../components/shared/SkeletonLoader'
 
 const tabs = ['Plan', 'Cleaning', 'EDA', 'Models', 'Explainability', 'Evaluation', 'Report']
@@ -23,9 +22,9 @@ export default function Results() {
   const resultQuery = useQuery({ queryKey: ['result', runId], queryFn: () => getPipelineResult(runId), enabled: !!runId && statusQuery.data?.status === 'completed' })
   const status = statusQuery.data?.status
   if (status === 'running' || status === 'not_found' || !status) return <ProgressTracker runId={runId} />
-  if (status === 'failed') return <ErrorCard title="Pipeline failed" message="This analysis could not complete." detail={JSON.stringify(statusQuery.data, null, 2)} />
+  if (status === 'failed') return <PipelineErrorCard errorData={statusQuery.data} onReset={() => window.history.back()} />
   if (resultQuery.isLoading) return <SkeletonLoader lines={8} height="h-12" />
-  if (resultQuery.error) return <ErrorCard title="Result unavailable" message="Could not load run result." detail={resultQuery.error.message} />
+  if (resultQuery.error) return <PipelineErrorCard errorData={{ error: resultQuery.error.message }} onReset={() => window.history.back()} />
   const result = resultQuery.data
   return (
     <div className="space-y-6">
@@ -51,3 +50,103 @@ export default function Results() {
   )
 }
 
+const getPipelineErrorSuggestion = (errorMsg = '') => {
+  const msg = errorMsg.toLowerCase()
+
+  if (msg.includes('no models trained') || msg.includes('all models failed')) {
+    return {
+      title: 'Model training failed',
+      steps: [
+        'Check your target column - it should have 2-20 unique values for classification',
+        'Make sure your target column is not all nulls or a single constant value',
+        "Try a different target column - look for columns like 'Survived', 'Churn', 'Price', 'Category'",
+        'If using a regression target, ensure it has numeric values',
+      ],
+    }
+  }
+  if (msg.includes('less than 2 unique')) {
+    return {
+      title: 'Target column is constant',
+      steps: [
+        'The selected target column has only 1 unique value',
+        'Pick a column that varies across rows',
+      ],
+    }
+  }
+  if (msg.includes('too few samples')) {
+    return {
+      title: 'Not enough data',
+      steps: [
+        'Your dataset has too few rows after cleaning',
+        'Upload a dataset with at least 50 rows',
+      ],
+    }
+  }
+  return {
+    title: 'Pipeline error',
+    steps: ['Check the technical details below and try a different target column'],
+  }
+}
+
+function PipelineErrorCard({ errorData, onReset }) {
+  const errorMsg = errorData?.error || errorData?.message || 'Unknown error'
+  const suggestion = getPipelineErrorSuggestion(errorMsg)
+
+  return (
+    <div style={{
+      background: '#FEF2F2', border: '1px solid #FECACA',
+      borderRadius: '10px', padding: '24px', maxWidth: '600px',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+        <span style={{ fontSize: '20px', color: '#B91C1C' }}>!</span>
+        <h3 style={{ color: '#B91C1C', margin: 0 }}>{suggestion.title}</h3>
+      </div>
+
+      <div style={{
+        background: '#FFFBEB', border: '1px solid #FCD34D',
+        borderRadius: '8px', padding: '14px', marginBottom: '16px',
+      }}>
+        <p style={{
+          fontSize: '12px', fontWeight: 600, color: '#92400E',
+          textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px',
+        }}>
+          What to do
+        </p>
+        <ul style={{ margin: 0, paddingLeft: '18px' }}>
+          {suggestion.steps.map((step, i) => (
+            <li key={i} style={{
+              fontSize: '13px', color: '#78350F',
+              marginBottom: '4px', lineHeight: '1.5',
+            }}>
+              {step}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <details style={{ marginBottom: '16px' }}>
+        <summary style={{ fontSize: '12px', color: '#6B7280', cursor: 'pointer' }}>
+          Technical details
+        </summary>
+        <pre style={{
+          fontSize: '11px', background: '#F3F4F6', padding: '10px',
+          borderRadius: '6px', marginTop: '8px', whiteSpace: 'pre-wrap',
+          color: '#374151', maxHeight: '200px', overflowY: 'auto',
+        }}>
+          {JSON.stringify(errorData, null, 2)}
+        </pre>
+      </details>
+
+      <button
+        onClick={onReset}
+        style={{
+          background: '#4F46E5', color: 'white', border: 'none',
+          borderRadius: '6px', padding: '10px 24px',
+          fontSize: '14px', cursor: 'pointer', fontWeight: 500,
+        }}
+      >
+        Try Again
+      </button>
+    </div>
+  )
+}

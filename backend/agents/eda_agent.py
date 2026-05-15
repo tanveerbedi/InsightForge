@@ -1,15 +1,20 @@
 # backend/agents/eda_agent.py
 import base64
+import traceback
 from io import BytesIO
 
 import numpy as np
 import pandas as pd
+from sklearn.feature_selection import mutual_info_classif, mutual_info_regression
+
+from utils.ml_preprocessing import detect_identifier_columns
 
 
 class EDAAgent:
     def run(self, df: pd.DataFrame, target_col: str = None, problem_type: str = None) -> dict:
         try:
             numeric_df = df.select_dtypes(include=[np.number])
+            numeric_features = numeric_df.drop(columns=[target_col], errors="ignore")
             missing_per_column = {col: int(val) for col, val in df.isna().sum().items()}
             recommended_target = target_col or self._recommend_target(df)
             class_balance = {}
@@ -23,7 +28,7 @@ class EDAAgent:
                 }
 
             feature_distributions = {}
-            for col in numeric_df.columns:
+            for col in numeric_features.columns:
                 values = numeric_df[col].dropna()
                 if values.empty:
                     continue
@@ -32,16 +37,22 @@ class EDAAgent:
                     "counts": counts.tolist(),
                     "bins": bins.tolist(),
                     "skewness": float(values.skew()) if len(values) > 2 else 0.0,
+                    "kurtosis": float(values.kurtosis()) if len(values) > 3 else 0.0,
                 }
 
-            insights = self._build_insights(df, numeric_df, class_balance)
+            identifier_risks = detect_identifier_columns(df, target_col)
+            cardinality = self._cardinality(df, target_col)
+            outliers = self._outliers(numeric_features)
+            mutual_information = self._mutual_information(df, recommended_target, problem_type)
+            target_distributions = self._target_distributions(df, recommended_target, problem_type)
+            insights = self._build_insights(df, numeric_features, class_balance, identifier_risks, cardinality, outliers, mutual_information, target_col)
             charts = {
-                "correlation_matrix": self._chart_correlation(numeric_df),
-                "boxplots": self._chart_boxplots(numeric_df),
+                "correlation_matrix": self._chart_correlation(numeric_features),
+                "boxplots": self._chart_boxplots(numeric_features),
                 "missing_heatmap": self._chart_missing(df),
                 "distributions": {
-                    col: self._chart_distribution(numeric_df[col], col)
-                    for col in numeric_df.columns[:5]
+                    col: self._chart_distribution(numeric_features[col], col)
+                    for col in numeric_features.columns[:5]
                 },
             }
 
@@ -51,8 +62,16 @@ class EDAAgent:
                 "shape": [int(df.shape[0]), int(df.shape[1])],
                 "dtypes": {col: str(dtype) for col, dtype in df.dtypes.items()},
                 "missing_per_column": missing_per_column,
-                "describe": df.describe(include="all").fillna("").to_dict(),
+                "describe": df.describe(include="all").astype(object).where(pd.notna(df.describe(include="all")), "").to_dict(),
                 "correlation": numeric_df.corr(numeric_only=True).fillna(0).to_dict(),
+                "cardinality": cardinality,
+                "outliers": outliers,
+                "mutual_information": mutual_information,
+                "target_distributions": target_distributions,
+                "identifier_risks": [
+                    {"column": item.column, "unique_ratio": round(item.unique_ratio, 4), "reason": item.reason}
+                    for item in identifier_risks
+                ],
                 "class_balance": class_balance,
                 "feature_distributions": feature_distributions,
                 "recommended_target": recommended_target,
@@ -60,7 +79,7 @@ class EDAAgent:
                 "charts": charts,
             }
         except Exception as exc:
-            return {"status": "error", "error": str(exc)}
+            return {"status": "error", "error": str(exc), "traceback": traceback.format_exc()}
 
     def _recommend_target(self, df):
         if df.empty:
@@ -75,8 +94,16 @@ class EDAAgent:
                 scores[col] = unique_ratio * 10
         return max(scores, key=scores.get)
 
-    def _build_insights(self, df, numeric_df, class_balance):
+    def _build_insights(self, df, numeric_df, class_balance, identifier_risks, cardinality, outliers, mutual_information, target_col):
         insights = []
+        for item in identifier_risks:
+            insights.append(
+                {
+                    "severity": "HIGH",
+                    "topic": "Identifier leakage risk",
+                    "description": f"'{item.column}' looks like an identifier ({item.unique_ratio:.1%} unique) and should be excluded from modeling.",
+                }
+            )
         for col, pct in df.isna().mean().items():
             if pct > 0.3:
                 insights.append(
@@ -126,6 +153,42 @@ class EDAAgent:
                         "description": f"'{col}' is highly skewed (skewness {skewness:.2f}).",
                     }
                 )
+            kurtosis = numeric_df[col].dropna().kurtosis() if len(numeric_df[col].dropna()) > 3 else 0
+            if pd.notna(kurtosis) and abs(kurtosis) > 5:
+                insights.append(
+                    {
+                        "severity": "LOW",
+                        "topic": "Heavy-tailed distribution",
+                        "description": f"'{col}' has high kurtosis ({kurtosis:.2f}); robust scaling or transformation may help linear models.",
+                    }
+                )
+        for item in cardinality[:10]:
+            if item["unique_ratio"] > 0.5 and item["column"] != target_col:
+                insights.append(
+                    {
+                        "severity": "MEDIUM",
+                        "topic": "High cardinality",
+                        "description": f"'{item['column']}' has {item['unique_count']} unique values; rare category grouping is recommended.",
+                    }
+                )
+        for col, payload in outliers.items():
+            if payload["outlier_pct"] > 5:
+                insights.append(
+                    {
+                        "severity": "MEDIUM",
+                        "topic": "Outlier concentration",
+                        "description": f"'{col}' has {payload['outlier_pct']:.1f}% IQR outliers.",
+                    }
+                )
+        top_mi = mutual_information[:1]
+        if top_mi and top_mi[0]["score"] < 0.001:
+            insights.append(
+                {
+                    "severity": "MEDIUM",
+                    "topic": "Weak feature signal",
+                    "description": "Mutual information did not find a strong individual predictor; expect model performance to depend on interactions.",
+                }
+            )
         if not insights:
             insights.append(
                 {
@@ -135,6 +198,69 @@ class EDAAgent:
                 }
             )
         return insights[:20]
+
+    def _cardinality(self, df, target_col):
+        rows = max(len(df), 1)
+        result = []
+        for col in df.columns:
+            if col == target_col:
+                continue
+            unique = int(df[col].nunique(dropna=False))
+            probs = df[col].value_counts(normalize=True, dropna=False)
+            entropy = float(-(probs * np.log2(probs + 1e-12)).sum())
+            result.append({"column": col, "unique_count": unique, "unique_ratio": round(unique / rows, 4), "entropy": round(entropy, 4)})
+        return sorted(result, key=lambda x: x["unique_ratio"], reverse=True)
+
+    def _outliers(self, numeric_df):
+        result = {}
+        for col in numeric_df.columns:
+            values = numeric_df[col].dropna()
+            if len(values) < 5:
+                continue
+            q1, q3 = values.quantile([0.25, 0.75])
+            iqr = q3 - q1
+            if iqr == 0:
+                continue
+            mask = (values < q1 - 1.5 * iqr) | (values > q3 + 1.5 * iqr)
+            result[col] = {"count": int(mask.sum()), "outlier_pct": round(float(mask.mean() * 100), 2)}
+        return result
+
+    def _mutual_information(self, df, target_col, problem_type):
+        if not target_col or target_col not in df.columns:
+            return []
+        try:
+            X = df.drop(columns=[target_col]).copy()
+            y = df[target_col]
+            for col in X.columns:
+                if not pd.api.types.is_numeric_dtype(X[col]):
+                    X[col] = pd.factorize(X[col].astype(str), sort=True)[0]
+                X[col] = pd.to_numeric(X[col], errors="coerce").fillna(X[col].median() if pd.api.types.is_numeric_dtype(X[col]) else 0)
+            if not pd.api.types.is_numeric_dtype(y):
+                y = pd.factorize(y.astype(str), sort=True)[0]
+            func = mutual_info_classif if problem_type == "classification" else mutual_info_regression
+            scores = func(X, y, random_state=42)
+            return sorted(
+                [{"feature": str(col), "score": float(score)} for col, score in zip(X.columns, scores)],
+                key=lambda x: x["score"],
+                reverse=True,
+            )[:20]
+        except Exception:
+            return []
+
+    def _target_distributions(self, df, target_col, problem_type):
+        if problem_type != "classification" or not target_col or target_col not in df.columns:
+            return {}
+        result = {}
+        for col in df.columns:
+            if col == target_col:
+                continue
+            if pd.api.types.is_numeric_dtype(df[col]):
+                grouped = df.groupby(target_col)[col].agg(["mean", "median", "std"]).fillna(0)
+                result[col] = grouped.to_dict(orient="index")
+            elif df[col].nunique(dropna=False) <= 20:
+                table = pd.crosstab(df[col], df[target_col], normalize="index").round(4)
+                result[col] = table.to_dict(orient="index")
+        return dict(list(result.items())[:20])
 
     def _encode_plot(self, plot_fn):
         try:
@@ -184,6 +310,7 @@ class EDAAgent:
             lambda plt, sns: (
                 plt.figure(figsize=(9, 4)),
                 sns.barplot(x=missing.index[:20], y=missing.values[:20]),
+                plt.ylim(bottom=0),
                 plt.xticks(rotation=45, ha="right"),
                 plt.title("Missing Values by Column"),
             )
@@ -200,4 +327,3 @@ class EDAAgent:
                 plt.title(f"Distribution: {col}"),
             )
         )
-

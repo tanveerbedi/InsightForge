@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 def _load(run_id: str):
-    path = Path(f"./storage/runs/{run_id}.json")
+    path = Path(f"./.storage/runs/{run_id}.json")
     if not path.exists():
         raise HTTPException(status_code=404, detail="Run not found.")
     return json.loads(path.read_text(encoding="utf-8"))

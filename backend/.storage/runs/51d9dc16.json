@@ -1,0 +1,9 @@
+{
+  "run_id": "51d9dc16",
+  "status": "failed",
+  "error": "Training requires at least two target classes/values and one usable feature.",
+  "dataset_path": "storage\\uploads\\51d9dc16_eci_results_tamilnadu_2026.csv",
+  "dataset_name": "eci_results_tamilnadu_2026.csv",
+  "created_at": 1778650005.7056851,
+  "goal": "predict and do analysis on this data"
+}

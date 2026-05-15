@@ -1,0 +1,9 @@
+{
+  "run_id": "dcce2517",
+  "status": "failed",
+  "error": "Training requires at least two target classes/values and one usable feature.",
+  "dataset_path": "storage\\uploads\\dcce2517_mytyles_catalog.csv",
+  "dataset_name": "mytyles_catalog.csv",
+  "created_at": 1778649948.5925522,
+  "goal": "Clean this data and perform eda "
+}

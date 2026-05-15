@@ -1,0 +1,116 @@
+2026-05-13 13:50:08,024 - INFO - ml_agent - Successfully trained LogisticRegression
+2026-05-13 13:50:08,029 - INFO - ml_agent - Successfully trained RandomForestClassifier
+2026-05-13 13:50:08,341 - INFO - ml_agent - Successfully trained XGBClassifier
+2026-05-13 14:09:06,945 - INFO - ml_agent - Successfully trained RandomForestClassifier
+2026-05-13 14:09:06,976 - INFO - ml_agent - Successfully trained LogisticRegression
+2026-05-13 14:09:07,093 - INFO - ml_agent - Successfully trained XGBClassifier
+2026-05-13 14:09:07,247 - INFO - ml_agent - Successfully trained GradientBoostingClassifier
+2026-05-13 14:27:03,792 - INFO - ml_agent - Successfully trained LinearRegression
+2026-05-13 14:27:03,991 - INFO - ml_agent - Successfully trained RandomForestRegressor
+2026-05-13 15:43:25,942 - INFO - ml_agent - Successfully trained LogisticRegression
+2026-05-13 15:49:56,672 - INFO - ml_agent - Successfully trained LogisticRegression
+2026-05-13 15:49:56,946 - INFO - ml_agent - Successfully trained RandomForestClassifier
+2026-05-14 11:52:47,875 - INFO - ml_agent - Successfully trained LogisticRegression
+2026-05-14 11:52:48,226 - ERROR - ml_agent - Failed to train RandomForestClassifier:
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\agents\ml_agent.py", line 181, in run
+    trained = Parallel(n_jobs=-1, prefer="threads")(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 2070, in __call__
+    next(output)
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 1675, in _get_outputs
+    self._start(iterator, pre_dispatch)
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 1658, in _start
+    if self.dispatch_one_batch(iterator):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 1540, in dispatch_one_batch
+    self._dispatch(tasks)
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 1437, in _dispatch
+    job = self._backend.submit(batch, callback=batch_tracker)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\_parallel_backends.py", line 339, in submit
+    return self._get_pool().apply_async(
+           ^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\_parallel_backends.py", line 507, in _get_pool
+    self._pool = ThreadPool(self._n_jobs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\pool.py", line 930, in __init__
+    Pool.__init__(self, processes, initializer, initargs)
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\pool.py", line 196, in __init__
+    self._change_notifier = self._ctx.SimpleQueue()
+                            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\context.py", line 113, in SimpleQueue
+    return SimpleQueue(ctx=self.get_context())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\queues.py", line 362, in __init__
+    self._reader, self._writer = connection.Pipe(duplex=False)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\connection.py", line 575, in Pipe
+    h2 = _winapi.CreateFile(
+         ^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\agents\ml_agent.py", line 442, in _train_one
+    pipe.fit(X_train, y_train)
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\base.py", line 1336, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\pipeline.py", line 621, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\base.py", line 1336, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\ensemble\_forest.py", line 486, in fit
+    trees = Parallel(
+            ^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\utils\parallel.py", line 91, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 2070, in __call__
+    next(output)
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 1675, in _get_outputs
+    self._start(iterator, pre_dispatch)
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 1658, in _start
+    if self.dispatch_one_batch(iterator):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 1540, in dispatch_one_batch
+    self._dispatch(tasks)
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\parallel.py", line 1437, in _dispatch
+    job = self._backend.submit(batch, callback=batch_tracker)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\_parallel_backends.py", line 339, in submit
+    return self._get_pool().apply_async(
+           ^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\joblib\_parallel_backends.py", line 507, in _get_pool
+    self._pool = ThreadPool(self._n_jobs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\pool.py", line 930, in __init__
+    Pool.__init__(self, processes, initializer, initargs)
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\pool.py", line 196, in __init__
+    self._change_notifier = self._ctx.SimpleQueue()
+                            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\context.py", line 113, in SimpleQueue
+    return SimpleQueue(ctx=self.get_context())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\queues.py", line 362, in __init__
+    self._reader, self._writer = connection.Pipe(duplex=False)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\connection.py", line 575, in Pipe
+    h2 = _winapi.CreateFile(
+         ^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
+
+2026-05-15 02:12:03,498 - INFO - ml_agent - Successfully trained LogisticRegression
+2026-05-15 02:12:03,756 - INFO - ml_agent - Successfully trained RandomForestClassifier
+2026-05-15 02:12:04,048 - INFO - ml_agent - Successfully trained XGBClassifier
+2026-05-15 11:25:53,213 - INFO - ml_agent - Successfully trained LinearRegression
+2026-05-15 11:25:53,955 - INFO - ml_agent - Successfully trained RandomForestRegressor
+2026-05-15 15:38:35,449 - WARNING - ml_agent - Stratification disabled because at least one class has fewer than 2 samples.
+2026-05-15 15:38:56,234 - WARNING - ml_agent - Stratification disabled because at least one class has fewer than 2 samples.
+2026-05-15 15:39:11,335 - WARNING - ml_agent - Stratification disabled because at least one class has fewer than 2 samples.
+2026-05-15 15:39:11,510 - INFO - ml_agent - Successfully trained LogisticRegression
+2026-05-15 15:39:11,822 - INFO - ml_agent - Successfully trained RandomForestClassifier
+2026-05-15 15:39:12,307 - INFO - ml_agent - Successfully trained XGBClassifier

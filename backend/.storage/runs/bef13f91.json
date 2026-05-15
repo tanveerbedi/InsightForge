@@ -1,0 +1,13 @@
+{
+  "run_id": "bef13f91",
+  "status": "failed",
+  "error": "No models trained successfully.",
+  "traceback": "Traceback (most recent call last):\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\orchestrator\\graph.py\", line 200, in run_pipeline\n    final_state = _build_graph(progress_callback).invoke(state)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\venv\\Lib\\site-packages\\langgraph\\pregel\\main.py\", line 3309, in invoke\n    for chunk in self.stream(\n                 ^^^^^^^^^^^^\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\venv\\Lib\\site-packages\\langgraph\\pregel\\main.py\", line 2736, in stream\n    for _ in runner.tick(\n             ^^^^^^^^^^^^\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\venv\\Lib\\site-packages\\langgraph\\pregel\\_runner.py\", line 167, in tick\n    run_with_retry(\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\venv\\Lib\\site-packages\\langgraph\\pregel\\_retry.py\", line 126, in run_with_retry\n    return task.proc.invoke(task.input, config)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\venv\\Lib\\site-packages\\langgraph\\_internal\\_runnable.py\", line 656, in invoke\n    input = context.run(step.invoke, input, config, **kwargs)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\venv\\Lib\\site-packages\\langgraph\\_internal\\_runnable.py\", line 400, in invoke\n    ret = self.func(*args, **kwargs)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\orchestrator\\graph.py\", line 126, in ml_node\n    raise RuntimeError(result.get(\"error\", \"Model training failed.\"))\nRuntimeError: No models trained successfully.\nDuring task with name 'ml_trainer' and id '968a455f-61fb-dc40-25a4-3bd826b1106b'\n",
+  "dataset_path": "storage\\uploads\\bef13f91_eci_results_tamilnadu_2026.csv",
+  "dataset_name": "eci_results_tamilnadu_2026.csv",
+  "created_at": 1778661931.1340754,
+  "goal": "Predict the value of % Votes based on EVM Votes, Postal Votes, Code, and 7 other features. Analyze which features most influence % Votes and build the best regression model.",
+  "ml_results": {},
+  "cleaning_results": {},
+  "plan_results": {}
+}

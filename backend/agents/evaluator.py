@@ -1,6 +1,17 @@
 # backend/agents/evaluator.py
 import numpy as np
-from sklearn.metrics import auc, classification_report, precision_recall_curve, roc_curve
+import traceback
+from sklearn.metrics import (
+    auc,
+    average_precision_score,
+    balanced_accuracy_score,
+    classification_report,
+    confusion_matrix,
+    f1_score,
+    matthews_corrcoef,
+    precision_recall_curve,
+    roc_curve,
+)
 
 from utils.serializer import make_serializable
 
@@ -31,19 +42,62 @@ class EvaluatorAgent:
             if problem_type == "classification":
                 roc_data = {}
                 pr_data = {}
+                threshold_data = ml_results.get("threshold_optimization", {})
+                y_score = list(ml_results.get("holdout_y_score") or ml_results.get("y_score") or [])
+                positive_label = ml_results.get("positive_label", 1)
                 if len(np.unique(y_true)) == 2:
                     try:
-                        fpr, tpr, _ = roc_curve(y_true, y_hat)
-                        precision, recall, _ = precision_recall_curve(y_true, y_hat)
+                        score_source = y_score if len(y_score) == len(y_true) else y_hat
+                        y_binary = (np.asarray(y_true) == positive_label).astype(int)
+                        fpr, tpr, roc_thresholds = roc_curve(y_binary, score_source)
+                        precision, recall, pr_thresholds = precision_recall_curve(y_binary, score_source)
                         name = ml_results.get("best_model_name", "best_model")
-                        roc_data[name] = {"fpr": fpr.tolist(), "tpr": tpr.tolist(), "auc": float(auc(fpr, tpr))}
-                        pr_data[name] = {"precision": precision.tolist(), "recall": recall.tolist()}
+                        roc_data[name] = {"fpr": fpr.tolist(), "tpr": tpr.tolist(), "thresholds": roc_thresholds.tolist(), "auc": float(auc(fpr, tpr))}
+                        pr_data[name] = {
+                            "precision": precision.tolist(),
+                            "recall": recall.tolist(),
+                            "thresholds": pr_thresholds.tolist(),
+                            "auc": float(average_precision_score(y_binary, score_source)),
+                        }
                     except Exception as exc:
                         warnings.append(f"ROC/PR curve generation skipped: {exc}")
                 per_class = classification_report(y_true, y_hat, output_dict=True, zero_division=0)
-                score = ml_results.get("best_metrics", {}).get("f1_weighted")
-                recommendation = f"{ml_results.get('best_model_name', 'The selected model')} is recommended because it delivered a weighted F1 score of {score:.4f} on the holdout set." if isinstance(score, (int, float)) else "The selected model is recommended based on the strongest holdout performance."
-                return make_serializable({"status": "success", "problem_type": "classification", "roc_curve": roc_data, "precision_recall_curve": pr_data, "per_class_metrics": per_class, "warnings": warnings, "recommendation": recommendation})
+                cm = confusion_matrix(y_true, y_hat)
+                normalized_cm = np.divide(cm, cm.sum(axis=1, keepdims=True), out=np.zeros_like(cm, dtype=float), where=cm.sum(axis=1, keepdims=True) != 0)
+                aggregate = {
+                    "balanced_accuracy": balanced_accuracy_score(y_true, y_hat),
+                    "mcc": matthews_corrcoef(y_true, y_hat),
+                    "macro_f1": f1_score(y_true, y_hat, average="macro", zero_division=0),
+                    "weighted_f1": f1_score(y_true, y_hat, average="weighted", zero_division=0),
+                }
+                churn_recall = (ml_results.get("best_metrics", {}) or {}).get("churn_recall")
+                if churn_recall is None and str(positive_label) in per_class:
+                    churn_recall = per_class[str(positive_label)]["recall"]
+                recommendations = []
+                if isinstance(churn_recall, (int, float)) and churn_recall < 0.65:
+                    recommendations.append(
+                        f"Minority-class recall is low ({churn_recall:.0%}). Consider threshold optimization or stronger imbalance handling."
+                    )
+                if aggregate["macro_f1"] + 0.05 < aggregate["weighted_f1"]:
+                    recommendations.append("Weighted F1 is materially higher than macro F1, which indicates majority-class performance is hiding minority-class errors.")
+                if not recommendations:
+                    recommendations.append("Balanced metrics are acceptable for a first holdout pass; validate on fresh data before deployment.")
+                recommendation = " ".join(recommendations)
+                return make_serializable(
+                    {
+                        "status": "success",
+                        "problem_type": "classification",
+                        "roc_curve": roc_data,
+                        "precision_recall_curve": pr_data,
+                        "threshold_optimization": threshold_data,
+                        "per_class_metrics": per_class,
+                        "aggregate_metrics": aggregate,
+                        "confusion_matrix": cm.tolist(),
+                        "normalized_confusion_matrix": normalized_cm.tolist(),
+                        "warnings": warnings,
+                        "recommendation": recommendation,
+                    }
+                )
 
             actual = np.asarray(y_true, dtype=float)
             predicted = np.asarray(y_hat, dtype=float)
@@ -53,7 +107,7 @@ class EvaluatorAgent:
             recommendation = f"{ml_results.get('best_model_name', 'The selected model')} is recommended with R2={ml_results.get('best_metrics', {}).get('r2', 0):.4f} on the holdout set."
             return make_serializable({"status": "success", "problem_type": "regression", "residual_analysis": points, "error_distribution": {"counts": counts.tolist(), "bins": bins.tolist()}, "warnings": warnings, "recommendation": recommendation})
         except Exception as exc:
-            return make_serializable({"status": "partial", "problem_type": problem_type, "error": str(exc), "warnings": [str(exc)], "recommendation": self._training_recommendation(ml_results, problem_type), "training_metrics": ml_results.get("best_metrics", {})})
+            return make_serializable({"status": "partial", "problem_type": problem_type, "error": str(exc), "traceback": traceback.format_exc(), "warnings": [str(exc)], "recommendation": self._training_recommendation(ml_results, problem_type), "training_metrics": ml_results.get("best_metrics", {})})
 
     def _align_inputs(self, y_test, y_pred, ml_results):
         warnings = []

@@ -9,9 +9,12 @@ export default function ModelsReport({ mlData }) {
   const [expanded, setExpanded] = useState(null)
   if (!mlData) return <SkeletonLoader lines={8} height="h-12" />
   if (mlData.status === 'error') return <ErrorCard title="Model training failed" message="No model could be trained successfully." detail={mlData.error} />
-  const primary = mlData.problem_type === 'classification' ? 'f1_weighted' : 'r2'
+  const primary = mlData.problem_type === 'classification' ? 'churn_recall' : 'r2'
   const models = mlData.all_models || []
-  const chartData = models.map((m) => ({ name: m.display_name || m.name, value: Number(((m.tuned_metrics || m.metrics || {})[primary]) || 0), error: !!m.error, rank: m.rank }))
+  const chartData = models.map((m) => {
+    const metrics = metricBag(m)
+    return { name: m.display_name || m.name, value: Number(metrics[primary] ?? metrics.f1_weighted ?? 0), error: !!m.error, rank: m.rank }
+  })
   return (
     <div className="space-y-6">
       <div className="overflow-hidden rounded-lg bg-surface-700">
@@ -19,15 +22,15 @@ export default function ModelsReport({ mlData }) {
           <thead className="bg-slate-50 border-b border-slate-200"><tr><th className="p-3 text-slate-900 font-semibold">Rank</th><th className="p-3 text-slate-900 font-semibold">Model</th><th className="p-3 text-slate-900 font-semibold">Primary Metric</th><th className="p-3 text-slate-900 font-semibold">F1</th><th className="p-3 text-slate-900 font-semibold">Train Time</th><th className="p-3 text-slate-900 font-semibold">Tuned</th><th className="p-3 text-slate-900 font-semibold">Status</th></tr></thead>
           <tbody>
             {models.map((model) => {
-              const metrics = model.tuned_metrics && Object.keys(model.tuned_metrics).length ? model.tuned_metrics : model.metrics || {}
+              const metrics = metricBag(model)
               const rankClass = model.rank === 1 ? 'bg-emerald-500/10' : model.rank === 2 ? 'bg-brand-500/10' : model.rank === 3 ? 'bg-amber-500/10' : ''
               return (
                 <tr key={model.name} onClick={() => setExpanded(expanded === model.name ? null : model.name)} className={`cursor-pointer border-t border-surface-600 ${rankClass}`}>
                   <td className="p-3 text-white">{model.rank || '-'}</td>
                   <td className="p-3 text-white">{model.name}{expanded === model.name ? <MetricsGrid metrics={metrics} /> : null}</td>
-                  <td className="p-3 text-slate-700">{format(metrics[primary])}</td>
-                  <td className="p-3 text-slate-700">{format(metrics.f1_weighted)}</td>
-                  <td className="p-3 text-slate-700">{format(model.training_time_sec)}s</td>
+                  <td className="p-3 text-slate-300">{format(metrics[primary])}</td>
+                  <td className="p-3 text-slate-300">{format(metrics.f1_weighted)}</td>
+                  <td className="p-3 text-slate-300">{format(model.training_time_sec)}s</td>
                   <td className="p-3">{model.tuned ? <span className="rounded bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">TUNED</span> : <span className="text-slate-500">No</span>}</td>
                   <td className="p-3">{model.error ? <span title={model.error} className="rounded bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">FAILED</span> : <span className="rounded bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">OK</span>}</td>
                 </tr>
@@ -46,8 +49,8 @@ export default function ModelsReport({ mlData }) {
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData}>
               <XAxis dataKey="name" tick={{ fill: '#475569', fontSize: 12 }} />
-              <YAxis tick={{ fill: '#475569', fontSize: 12 }} />
-              <Tooltip />
+              <YAxis domain={[0, 1]} tick={{ fill: '#cbd5e1', fontSize: 12 }} />
+              <Tooltip formatter={(value) => [format(Number(value)), primary]} labelStyle={{ color: '#0f172a' }} />
               <Bar dataKey="value">
                 {chartData.map((entry, index) => <Cell key={index} fill={entry.error ? '#475569' : entry.rank === 1 ? '#10b981' : '#6366f1'} />)}
               </Bar>
@@ -59,7 +62,8 @@ export default function ModelsReport({ mlData }) {
       <div className="rounded-lg bg-slate-50 border border-slate-200 p-5 text-sm text-slate-700">
         <h3 className="mb-3 font-semibold text-slate-900">Preprocessing Notes</h3>
         <p>{mlData.preprocessing_notes}</p>
-        <p className="mt-2">Scaler: {mlData.scaler_used} | SMOTE: {mlData.smote_applied ? 'Applied' : 'Not applied'} | Train/Test: {mlData.train_size}/{mlData.test_size} | Imbalance: {mlData.imbalance_ratio}</p>
+        <p className="mt-2">Scaler: {mlData.scaler_used} | SMOTE: {mlData.smote_applied ? 'Applied on training folds only' : 'Not applied'} | Train/Test: {mlData.train_size}/{mlData.test_size} | Imbalance: {mlData.imbalance_ratio}</p>
+        {mlData.imbalance_diagnostics ? <ImbalanceDiagnostics diagnostics={mlData.imbalance_diagnostics} /> : null}
       </div>
     </div>
   )
@@ -67,7 +71,7 @@ export default function ModelsReport({ mlData }) {
 
 function TuningCard({ model, primary }) {
   const before = model.metrics?.[primary]
-  const after = model.tuned_metrics?.[primary] || before
+  const after = metricBag(model)?.[primary] ?? before
   const delta = Number(after || 0) - Number(before || 0)
   return (
     <div className="rounded-lg bg-surface-700 p-5">
@@ -75,7 +79,7 @@ function TuningCard({ model, primary }) {
         <h3 className="font-semibold text-white">{model.name}</h3>
         {model.rank === 1 ? <span className="flex items-center gap-1 rounded bg-emerald-500/20 px-2 py-1 text-xs text-emerald-200"><Crown className="h-3 w-3" /> CHAMPION</span> : null}
       </div>
-      <p className="mt-3 text-sm text-slate-300">{format(before)} → {format(after)} <span className="text-emerald-300">+{delta.toFixed(3)}</span></p>
+      <p className="mt-3 text-sm text-slate-300">{format(before)} to {format(after)} <span className="text-emerald-300">+{delta.toFixed(3)}</span></p>
       <pre className="mt-3 max-h-40 overflow-auto rounded-lg bg-surface-900 p-3 text-xs text-slate-300">{JSON.stringify(model.tuned_params || {}, null, 2)}</pre>
     </div>
   )
@@ -83,6 +87,17 @@ function TuningCard({ model, primary }) {
 
 function MetricsGrid({ metrics }) {
   return <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-slate-300">{Object.entries(metrics).filter(([, v]) => typeof v !== 'object').map(([k, v]) => <span key={k} className="rounded bg-surface-900 px-2 py-1">{k}: {format(v)}</span>)}</div>
+}
+
+function ImbalanceDiagnostics({ diagnostics }) {
+  const before = Object.entries(diagnostics.before || {}).map(([label, value]) => `${label}: ${value}`).join(' | ')
+  return (
+    <div className="mt-4 rounded-lg border border-amber-400/30 bg-amber-500/10 p-3 text-amber-100">
+      <p className="font-semibold">Imbalance diagnostics</p>
+      <p className="mt-1">Before: {before || 'N/A'}</p>
+      <p className="mt-1">Strategy: {diagnostics.strategy || 'none'}</p>
+    </div>
+  )
 }
 
 function ConfusionMatrix({ matrix }) {
@@ -98,4 +113,8 @@ function ConfusionMatrix({ matrix }) {
 
 function format(value) {
   return typeof value === 'number' ? value.toFixed(4) : value ?? '-'
+}
+
+function metricBag(model) {
+  return model?.tuned_metrics && Object.keys(model.tuned_metrics).length ? model.tuned_metrics : model?.metrics || {}
 }

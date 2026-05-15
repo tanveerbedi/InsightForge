@@ -11,8 +11,8 @@ InsightForge is an AI-powered autonomous data science platform that transforms r
 - **Smart Data Cleaning** — Automatically detect and fix missing values, duplicates, and type inconsistencies
 - **Exploratory Data Analysis** — Generate comprehensive statistical summaries and visualizations
 - **Model Comparison** — Train and benchmark multiple ML algorithms with automatic hyperparameter tuning
-- **Explainability** — Understand model decisions with SHAP-based feature importance analysis
-- **Interactive Chat** — Ask natural language questions about your analysis results
+- **Explainability** — Understand model decisions via SHAP (when installed) or native model importances
+- **Interactive Chat** — Ask natural language questions about your analysis results (works with or without a Groq API key)
 - **Report Generation** — Export detailed findings in professional formats
 - **Run History** — Track all analyses with versioning and reproducibility
 - **Fast Mode** — Execute quick analyses for rapid iteration
@@ -174,14 +174,16 @@ Frontend will be available at: **http://localhost:5173**
 - `GET /api/pipeline/result/{run_id}` — Retrieve results
 
 ### Chat
-- `POST /api/chat/message` — Send question about analysis
+- `POST /api/chat/{run_id}` — Send question about a completed analysis run
 
 ### History
-- `GET /api/history` — List all past runs
+- `GET /api/history/` — List all past runs
 - `GET /api/history/{run_id}` — Get specific run details
 
 ### Reports
-- `GET /api/export/report/{run_id}` — Export analysis report
+- `GET /api/export/pdf/{run_id}` — Export PDF report
+- `GET /api/export/excel/{run_id}` — Export Excel workbook
+- `GET /api/export/csv/{run_id}` — Export CSV summary
 
 Full API documentation available at `/docs` when backend is running.
 
@@ -193,7 +195,7 @@ Full API documentation available at `/docs` when backend is running.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `GROQ_API_KEY` | Required | API key for Groq LLM service |
+| `GROQ_API_KEY` | Optional | Groq API key for LLM-powered chat; falls back to keyword retrieval if unset |
 | `LLM_MODEL_NAME` | llama-3.3-70b-versatile | Groq model identifier |
 | `LLM_TEMPERATURE` | 0.0 | LLM creativity (0=deterministic, 1=creative) |
 | `FAST_MODE` | false | Skip heavy computations (SHAP, visualization) |
@@ -253,6 +255,10 @@ npm install
 # Check Node version
 node --version  # Should be 16+
 ```
+
+### Chat always responds "I could not answer"
+- `GROQ_API_KEY` is optional — without it, chat uses local keyword retrieval and rule-based answers
+- If using Groq: verify the key in `.env`, check it hasn't expired, and ensure network access to `api.groq.com`
 
 ### Groq API errors
 - Verify `GROQ_API_KEY` is set correctly in `.env`

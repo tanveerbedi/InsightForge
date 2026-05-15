@@ -1,0 +1,2650 @@
+{
+  "goal": "Predict which category of Size using img_url, texture and 1 more features. Find the most important features and identify the best classification model for this dataset.",
+  "target_col": "size",
+  "selected_models": [
+    "LogisticRegression",
+    "RandomForestClassifier",
+    "XGBClassifier"
+  ],
+  "user_params": {},
+  "fast_mode": true,
+  "run_explainability": true,
+  "run_id": "cec83869",
+  "dataset_path": ".storage\\uploads\\cec83869_df_balanced.csv",
+  "dataset_name": "df_balanced.csv",
+  "created_at": 1778839750.2193675,
+  "status": "completed",
+  "plan_results": {
+    "status": "success",
+    "plan": [
+      {
+        "step": 1,
+        "agent": "data_cleaning",
+        "action": "Clean missing values, duplicates, categorical encodings, and zero-variance features.",
+        "reasoning": "Reliable modeling requires consistent numeric inputs and a clear audit trail."
+      },
+      {
+        "step": 2,
+        "agent": "eda",
+        "action": "Profile distributions, missingness, correlations, target balance, and notable risks.",
+        "reasoning": "Exploratory analysis exposes quality issues and informs model selection."
+      },
+      {
+        "step": 3,
+        "agent": "ml_training",
+        "action": "Train and compare candidate classification models.",
+        "reasoning": "Multiple model families reduce the chance of overfitting to one algorithmic assumption."
+      },
+      {
+        "step": 4,
+        "agent": "explainability",
+        "action": "Explain the best model with global SHAP feature importance when available.",
+        "reasoning": "Decision-makers need model behavior translated into feature-level evidence."
+      },
+      {
+        "step": 5,
+        "agent": "evaluation",
+        "action": "Evaluate predictive quality and error patterns.",
+        "reasoning": "Diagnostics clarify whether the model is strong enough for the stated goal."
+      },
+      {
+        "step": 6,
+        "agent": "reporting",
+        "action": "Create a concise business-facing report with recommendations and exports.",
+        "reasoning": "The analysis should end with actions, not just metrics."
+      }
+    ],
+    "problem_type": "classification",
+    "detected_target": "size",
+    "summary": "Planned a classification workflow for target 'size' against the goal: Predict which category of Size using img_url, texture and 1 more features. Find the most important features and identify the best classification model for this dataset."
+  },
+  "cleaning_results": {
+    "status": "success",
+    "cleaned_df": [
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles1"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles2"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles3"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles4"
+      },
+      {
+        "img_url": "https://www.kajariaceramics.com/storage/product/SPW01439_b.jpg",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles5"
+      },
+      {
+        "img_url": "https://www.kajariaceramics.com/storage/product/PW01308_b.jpg",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles6"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles7"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles8"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "https://www.kajariaceramics.com/storage/product/PW03082_b.jpg",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles10"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Other",
+        "img_name": "tile_Kajaria_ceramic-wall-tiles11"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Jet Black",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Ganges Azul",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Autumn Nero",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Atlantic Light",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Rubix Brown",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Checkered Highlighter",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Clinker Natural",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Vitrosa Naturale",
+        "img_name": "Other"
+      },
+      {
+        "img_url": "Other",
+        "size": "30x45 cm",
+        "texture": "Ceramic Wall Tiles",
+        "color": "Flavia Olive Highlighter",
+        "img_name": "Other"
+      }
+    ],
+    "original_shape": [
+      1050,
+      5
+    ],
+    "cleaned_shape": [
+      160,
+      5
+    ],
+    "rows_removed": 890,
+    "cols_removed": 0,
+    "missing_fixed": 0,
+    "duplicates_removed": 890,
+    "data_quality_score": 100.0,
+    "cleaning_log": [
+      "Limited high-cardinality column 'img_url' to top 50 categories.",
+      "Limited high-cardinality column 'color' to top 50 categories.",
+      "Limited high-cardinality column 'img_name' to top 50 categories.",
+      "Removed 890 exact duplicate rows."
+    ],
+    "identifier_columns": [],
+    "normalization_stats": {
+      "coerced_numeric": [],
+      "normalized_categoricals": [
+        "img_url",
+        "size",
+        "texture",
+        "color",
+        "img_name"
+      ]
+    },
+    "column_types": {
+      "img_url": {
+        "original": "object",
+        "cleaned": "object"
+      },
+      "size": {
+        "original": "object",
+        "cleaned": "object"
+      },
+      "texture": {
+        "original": "object",
+        "cleaned": "object"
+      },
+      "color": {
+        "original": "object",
+        "cleaned": "object"
+      },
+      "img_name": {
+        "original": "object",
+        "cleaned": "object"
+      }
+    }
+  },
+  "eda_results": {
+    "status": "success",
+    "problem_type": "classification",
+    "shape": [
+      160,
+      5
+    ],
+    "dtypes": {
+      "img_url": "object",
+      "size": "object",
+      "texture": "object",
+      "color": "object",
+      "img_name": "object"
+    },
+    "missing_per_column": {
+      "img_url": 0,
+      "size": 0,
+      "texture": 0,
+      "color": 0,
+      "img_name": 0
+    },
+    "describe": {
+      "img_url": {
+        "count": 160,
+        "unique": 51,
+        "top": "Other",
+        "freq": 102
+      },
+      "size": {
+        "count": 160,
+        "unique": 11,
+        "top": "30x45 cm",
+        "freq": 45
+      },
+      "texture": {
+        "count": 160,
+        "unique": 4,
+        "top": "Polished Vitrified Tiles",
+        "freq": 54
+      },
+      "color": {
+        "count": 160,
+        "unique": 51,
+        "top": "Other",
+        "freq": 76
+      },
+      "img_name": {
+        "count": 160,
+        "unique": 51,
+        "top": "Other",
+        "freq": 110
+      }
+    },
+    "correlation": {},
+    "cardinality": [
+      {
+        "column": "img_url",
+        "unique_count": 51,
+        "unique_ratio": 0.3187,
+        "entropy": 2.9635
+      },
+      {
+        "column": "color",
+        "unique_count": 51,
+        "unique_ratio": 0.3187,
+        "entropy": 3.9119
+      },
+      {
+        "column": "img_name",
+        "unique_count": 51,
+        "unique_ratio": 0.3187,
+        "entropy": 2.6597
+      },
+      {
+        "column": "texture",
+        "unique_count": 4,
+        "unique_ratio": 0.025,
+        "entropy": 1.8982
+      }
+    ],
+    "outliers": {},
+    "mutual_information": [
+      {
+        "feature": "texture",
+        "score": 1.003617480814465
+      },
+      {
+        "feature": "img_name",
+        "score": 0.45121088926619857
+      },
+      {
+        "feature": "img_url",
+        "score": 0.4308912657293775
+      },
+      {
+        "feature": "color",
+        "score": 0.21122653976689199
+      }
+    ],
+    "target_distributions": {
+      "texture": {
+        "Ceramic Wall Tiles": {
+          "120x180 cm": 0.0,
+          "120x240 cm": 0.0,
+          "20x20 cm": 0.0,
+          "30x30 cm": 0.0,
+          "30x45 cm": 0.9362,
+          "30x60 cm": 0.0638,
+          "40x40 cm": 0.0,
+          "60x120 cm": 0.0,
+          "60x60 cm": 0.0,
+          "80x160 cm": 0.0,
+          "80x240 cm": 0.0
+        },
+        "Glazed Vitrified Tiles": {
+          "120x180 cm": 0.1429,
+          "120x240 cm": 0.1667,
+          "20x20 cm": 0.0238,
+          "30x30 cm": 0.0,
+          "30x45 cm": 0.0,
+          "30x60 cm": 0.0952,
+          "40x40 cm": 0.0,
+          "60x120 cm": 0.1667,
+          "60x60 cm": 0.1667,
+          "80x160 cm": 0.2381,
+          "80x240 cm": 0.0
+        },
+        "Gres Tiles": {
+          "120x180 cm": 0.2941,
+          "120x240 cm": 0.0,
+          "20x20 cm": 0.0,
+          "30x30 cm": 0.1176,
+          "30x45 cm": 0.0,
+          "30x60 cm": 0.0,
+          "40x40 cm": 0.0588,
+          "60x120 cm": 0.1765,
+          "60x60 cm": 0.1176,
+          "80x160 cm": 0.2353,
+          "80x240 cm": 0.0
+        },
+        "Polished Vitrified Tiles": {
+          "120x180 cm": 0.1852,
+          "120x240 cm": 0.0,
+          "20x20 cm": 0.0,
+          "30x30 cm": 0.0,
+          "30x45 cm": 0.0185,
+          "30x60 cm": 0.0,
+          "40x40 cm": 0.0185,
+          "60x120 cm": 0.037,
+          "60x60 cm": 0.037,
+          "80x160 cm": 0.0,
+          "80x240 cm": 0.7037
+        }
+      }
+    },
+    "identifier_risks": [],
+    "class_balance": {
+      "30x45 cm": {
+        "count": 45,
+        "percentage": 28.12
+      },
+      "80x240 cm": {
+        "count": 38,
+        "percentage": 23.75
+      },
+      "120x180 cm": {
+        "count": 21,
+        "percentage": 13.12
+      },
+      "80x160 cm": {
+        "count": 14,
+        "percentage": 8.75
+      },
+      "60x120 cm": {
+        "count": 12,
+        "percentage": 7.5
+      },
+      "60x60 cm": {
+        "count": 11,
+        "percentage": 6.88
+      },
+      "30x60 cm": {
+        "count": 7,
+        "percentage": 4.38
+      },
+      "120x240 cm": {
+        "count": 7,
+        "percentage": 4.38
+      },
+      "30x30 cm": {
+        "count": 2,
+        "percentage": 1.25
+      },
+      "40x40 cm": {
+        "count": 2,
+        "percentage": 1.25
+      },
+      "20x20 cm": {
+        "count": 1,
+        "percentage": 0.62
+      }
+    },
+    "feature_distributions": {},
+    "recommended_target": "size",
+    "insights": [
+      {
+        "severity": "HIGH",
+        "topic": "Class imbalance",
+        "description": "The largest class is 45.0x the smallest class."
+      }
+    ],
+    "charts": {
+      "correlation_matrix": null,
+      "boxplots": null,
+      "missing_heatmap": "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aBpfAfB0STyKdNOmTbp48aJ8fX313HPPmffh1atX9e6772rFihV6++23FRoaqowZM0q6s+PpuHHjZLfb9dtvvylPnjypPtMCBG94onzyySfy9vZWr169zLK//vpLU6ZM0RdffKF69eqpf//+Kl26tKSUwzcp9SAPwINJfC99+umnGjJkiPLly6fIyEht2bLFvBcPHDigxo0ba9++fapfv77eeOMN+fn5acGCBVq6dKmuX7+ujRs3mqNwADwa58+f1zvvvKOtW7dKkjp27Kjx48eba0glvEZevnxZYWFh+uqrr3T58mV5e3urVq1aatSokfLmzZuWlwA8de5+f3rp0iUFBQXJMAzNmzdPhQoVMutcvHhRH374oebMmaO6detq+fLl5nkXL17Uq6++qm+++YZwHHiEEt+jPXv21JdffilJcnFxUZUqVTRhwgQVKVJE8fHxOnTokHr06KFVq1YpU6ZMKlmypM6dO6eIiAg9//zz5ofKTAfHvRC84Ylx9OhR1alTRxEREfrqq6/UpUsX89iZM2c0ceJEDR8+XK+++up9hW8AHJP4DUTfvn01ePBgffDBB3JyctLo0aO1fPly1a1b16x3+PBhhYSEaO3atbp27ZokKX369KpSpYrGjx+vwoULp+XlAE+FlD5Y2r59u4YNG6YVK1aoYsWKmjVrlhmm3f0ayWsmYI0jR44oKipKL774oqSk99qRI0dUuHBhffjhhxo5cqR5Hyf8/8KFCwoKCtLu3bv13Xff6Z133tGtW7fk6urKh8mAhSZMmKDu3burbt26ql27tjZu3KhFixYpa9asWrVqlcqWLSu73S7DMDR48GBt2bJFR44ckb+/v6pXr662bdsqR44chG74V6wAiCeGn5+fJk2apH79+un999+XYRjq2rWrJClPnjzq1KmTpDu7r0l3ptaUKlWKBwjgEbPb7bLZbOYbiH79+mnw4MHq1KmT+vXrp61bt2r06NHmtunp0qWT3W6Xv7+/pk+frvPnz2vbtm2y2WwqU6aM8ubNa+4IBcAxCQ/ghw4dMsPsgIAA9e7dW7du3dLPP/+sYcOGmaPe7vUaSQgHPBrnzp1TxYoV9cILL2j8+PEKCAhIMuo0Li5OknTs2DEzUJPu3M/x8fHKnj27QkJC9L///U+HDx+W9H+7nXKPAo9eQpj266+/6uWXX9bYsWOVL18+de7c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LViwwFybHHgSEbw9w3766Sc1a9ZMGTNmVP/+/dWmTRtJ9x++8QABAMCdT9zbt2+vQ4cO6ZNPPtF7772n/fv366OPPtLevXt17tw55ciRI627CQBAmujZs6fGjh2r1157TfXr15dhGFq5cqW+/fZbubq6at26dapcufI9w7fEz55r1qxRz549dfjwYW3dulUlS5Z8nJcDPDCCt2fc8uXL1ahRI3l7e6cavk2cOFEdOnRI454CAPDk+uOPP9S5c2dt27ZNzz//vG7evKn4+HitXr1apUqVSuvuAQCQJtatW6egoCA1atRIQ4YMUb58+cxjw4YNU58+feTi4qINGzakOu00pdDt2LFj+u2333iNxX8Cmys841599VUtWLBAly9fVv/+/fXNN99Ikl5//XWNGTNGhQoVUqdOnTRr1qw07ikAAE+uMmXKaP78+WrYsKHc3NxUrlw5bdiwgQcCAMAz7cSJE4qPj1eDBg2UL18+GYah27dvS5J69eqlvn376tatW6pRo4a2bduWbMMFQjc8DVj5F2b41qhRI/Xv31+S1KZNG73++uuKjY3V6NGjFRgYmLadBADgCZcvXz4tWLBA165dk6urq9zc3NK6SwAApKnY2NhkZS4uLubItv79+2vLli365ZdfFBgYqPXr16ty5coyDEOGYZij3wjd8F/GiDdISj7ybcaMGZKkBg0aaO3atcqfP7/i4uLStpMAADzBElbvyJgxI6EbAACScuXKJUn65ptvdPbsWXP0mpOTk27duiVJKlq0qAoWLCgPDw81aNBA+/fvl81mM0O3FStWKCQkhNAN/1kEbzAlhG/Xr19Xx44dtWDBAklS+vTpJUnOzgyQBAAgNWw4BAB4FiWeGpogPj5ekvT222+rXr16Wrt2rZYsWaKoqCjzuKurqyTp3Llzql27tj7++GOdO3dOo0aNUnR0tAzD0MmTJzV06FDt3LlTmzZtInTDfxLBG5J49dVXNX36dOXLl0/VqlWTxIMEAAAAACC5+Ph4c2TawYMHtX37dkVHR5vBm91uV8eOHZUnTx4NGDBAkydP1smTJ5UuXTpJ0pIlS7R9+3YVK1ZMvXv3VtmyZbV582bZbDbZbDZ5enrqrbfe0p9//snupfjPYldTpCgmJkZubm6Kj483fykCAAAAACAl3fggJCRE48eP140bN5Q/f341btxYwcHBKliw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",
+      "distributions": {}
+    }
+  },
+  "ml_results": {
+    "status": "success",
+    "problem_type": "classification",
+    "all_models": [
+      {
+        "name": "LogisticRegression",
+        "display_name": "LogisticRegression",
+        "metrics": {
+          "accuracy": 0.0625,
+          "precision_weighted": 0.00390625,
+          "recall_weighted": 0.0625,
+          "f1_weighted": 0.007352941176470588,
+          "precision_macro": 0.0078125,
+          "recall_macro": 0.125,
+          "f1_macro": 0.014705882352941176,
+          "balanced_accuracy": 0.125,
+          "mcc": 0.0,
+          "specificity": 0.0,
+          "confusion_matrix": [
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              10,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "normalized_confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "classification_report": {
+            "0": {
+              "precision": 0.0625,
+              "recall": 1.0,
+              "f1-score": 0.11764705882352941,
+              "support": 2.0
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 2.0
+            },
+            "3": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 1.0
+            },
+            "4": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 10.0
+            },
+            "7": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 3.0
+            },
+            "8": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 4.0
+            },
+            "9": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 3.0
+            },
+            "10": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 7.0
+            },
+            "accuracy": 0.0625,
+            "macro avg": {
+              "precision": 0.0078125,
+              "recall": 0.125,
+              "f1-score": 0.014705882352941176,
+              "support": 32.0
+            },
+            "weighted avg": {
+              "precision": 0.00390625,
+              "recall": 0.0625,
+              "f1-score": 0.007352941176470588,
+              "support": 32.0
+            }
+          },
+          "churn_recall": 0.0,
+          "churn_precision": 0.0,
+          "churn_f1": 0.0
+        },
+        "training_time_sec": 0.147,
+        "tuned": false,
+        "tuned_params": {},
+        "tuned_metrics": {},
+        "rank": 1,
+        "error": null,
+        "scaler_used": "StandardScaler",
+        "imbalance_strategy": "class_weight",
+        "feature_names": [
+          "img_url_Other",
+          "img_url_https://www.kajariaceramics.com/images/placeholder/product-placeholder.svg",
+          "img_url_https://www.kajariaceramics.com/storage/product/kpvt00152d.jpg",
+          "img_url_https://www.kajariaceramics.com/storage/product/terrazzo-white.jpg",
+          "img_url_infrequent_sklearn",
+          "texture_Ceramic Wall Tiles",
+          "texture_Glazed Vitrified Tiles",
+          "texture_Gres Tiles",
+          "texture_Polished Vitrified Tiles",
+          "color_Alma Beige",
+          "color_Armani Beige",
+          "color_Armani Grey",
+          "color_Belgium Black",
+          "color_Brazilian Granite",
+          "color_Breccia Arancia",
+          "color_Carrara Gold",
+          "color_Crema Marfil",
+          "color_Desert Gold",
+          "color_Florence Bianco",
+          "color_Gozzio Silver",
+          "color_Italiano Beige",
+          "color_Onyx Carmo",
+          "color_Onyx Pearl",
+          "color_Oslo Blanco",
+          "color_Other",
+          "color_Satuario Luxe Beyond",
+          "color_Statuario Natural",
+          "color_Terrazzo White",
+          "color_infrequent_sklearn",
+          "img_name_Other",
+          "img_name_infrequent_sklearn"
+        ]
+      },
+      {
+        "name": "RandomForestClassifier",
+        "display_name": "RandomForest",
+        "metrics": {
+          "accuracy": 0.0625,
+          "precision_weighted": 0.00390625,
+          "recall_weighted": 0.0625,
+          "f1_weighted": 0.007352941176470588,
+          "precision_macro": 0.0078125,
+          "recall_macro": 0.125,
+          "f1_macro": 0.014705882352941176,
+          "balanced_accuracy": 0.125,
+          "mcc": 0.0,
+          "specificity": 0.0,
+          "confusion_matrix": [
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              10,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "normalized_confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "classification_report": {
+            "0": {
+              "precision": 0.0625,
+              "recall": 1.0,
+              "f1-score": 0.11764705882352941,
+              "support": 2.0
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 2.0
+            },
+            "3": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 1.0
+            },
+            "4": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 10.0
+            },
+            "7": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 3.0
+            },
+            "8": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 4.0
+            },
+            "9": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 3.0
+            },
+            "10": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 7.0
+            },
+            "accuracy": 0.0625,
+            "macro avg": {
+              "precision": 0.0078125,
+              "recall": 0.125,
+              "f1-score": 0.014705882352941176,
+              "support": 32.0
+            },
+            "weighted avg": {
+              "precision": 0.00390625,
+              "recall": 0.0625,
+              "f1-score": 0.007352941176470588,
+              "support": 32.0
+            }
+          },
+          "churn_recall": 0.0,
+          "churn_precision": 0.0,
+          "churn_f1": 0.0
+        },
+        "training_time_sec": 0.459,
+        "tuned": false,
+        "tuned_params": {},
+        "tuned_metrics": {},
+        "rank": 2,
+        "error": null,
+        "scaler_used": "none",
+        "imbalance_strategy": "class_weight",
+        "feature_names": [
+          "img_url_Other",
+          "img_url_https://www.kajariaceramics.com/images/placeholder/product-placeholder.svg",
+          "img_url_https://www.kajariaceramics.com/storage/product/kpvt00152d.jpg",
+          "img_url_https://www.kajariaceramics.com/storage/product/terrazzo-white.jpg",
+          "img_url_infrequent_sklearn",
+          "texture_Ceramic Wall Tiles",
+          "texture_Glazed Vitrified Tiles",
+          "texture_Gres Tiles",
+          "texture_Polished Vitrified Tiles",
+          "color_Alma Beige",
+          "color_Armani Beige",
+          "color_Armani Grey",
+          "color_Belgium Black",
+          "color_Brazilian Granite",
+          "color_Breccia Arancia",
+          "color_Carrara Gold",
+          "color_Crema Marfil",
+          "color_Desert Gold",
+          "color_Florence Bianco",
+          "color_Gozzio Silver",
+          "color_Italiano Beige",
+          "color_Onyx Carmo",
+          "color_Onyx Pearl",
+          "color_Oslo Blanco",
+          "color_Other",
+          "color_Satuario Luxe Beyond",
+          "color_Statuario Natural",
+          "color_Terrazzo White",
+          "color_infrequent_sklearn",
+          "img_name_Other",
+          "img_name_infrequent_sklearn"
+        ]
+      },
+      {
+        "name": "XGBClassifier",
+        "display_name": "XGB",
+        "metrics": {
+          "accuracy": 0.0625,
+          "precision_weighted": 0.00390625,
+          "recall_weighted": 0.0625,
+          "f1_weighted": 0.007352941176470588,
+          "precision_macro": 0.0078125,
+          "recall_macro": 0.125,
+          "f1_macro": 0.014705882352941176,
+          "balanced_accuracy": 0.125,
+          "mcc": 0.0,
+          "specificity": 0.0,
+          "confusion_matrix": [
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              10,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "normalized_confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "classification_report": {
+            "0": {
+              "precision": 0.0625,
+              "recall": 1.0,
+              "f1-score": 0.11764705882352941,
+              "support": 2.0
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 2.0
+            },
+            "3": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 1.0
+            },
+            "4": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 10.0
+            },
+            "7": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 3.0
+            },
+            "8": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 4.0
+            },
+            "9": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 3.0
+            },
+            "10": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1-score": 0.0,
+              "support": 7.0
+            },
+            "accuracy": 0.0625,
+            "macro avg": {
+              "precision": 0.0078125,
+              "recall": 0.125,
+              "f1-score": 0.014705882352941176,
+              "support": 32.0
+            },
+            "weighted avg": {
+              "precision": 0.00390625,
+              "recall": 0.0625,
+              "f1-score": 0.007352941176470588,
+              "support": 32.0
+            }
+          },
+          "churn_recall": 0.0,
+          "churn_precision": 0.0,
+          "churn_f1": 0.0
+        },
+        "training_time_sec": 0.935,
+        "tuned": false,
+        "tuned_params": {},
+        "tuned_metrics": {},
+        "rank": 3,
+        "error": null,
+        "scaler_used": "none",
+        "imbalance_strategy": "scale_pos_weight",
+        "feature_names": [
+          "img_url_Other",
+          "img_url_https://www.kajariaceramics.com/images/placeholder/product-placeholder.svg",
+          "img_url_https://www.kajariaceramics.com/storage/product/kpvt00152d.jpg",
+          "img_url_https://www.kajariaceramics.com/storage/product/terrazzo-white.jpg",
+          "img_url_infrequent_sklearn",
+          "texture_Ceramic Wall Tiles",
+          "texture_Glazed Vitrified Tiles",
+          "texture_Gres Tiles",
+          "texture_Polished Vitrified Tiles",
+          "color_Alma Beige",
+          "color_Armani Beige",
+          "color_Armani Grey",
+          "color_Belgium Black",
+          "color_Brazilian Granite",
+          "color_Breccia Arancia",
+          "color_Carrara Gold",
+          "color_Crema Marfil",
+          "color_Desert Gold",
+          "color_Florence Bianco",
+          "color_Gozzio Silver",
+          "color_Italiano Beige",
+          "color_Onyx Carmo",
+          "color_Onyx Pearl",
+          "color_Oslo Blanco",
+          "color_Other",
+          "color_Satuario Luxe Beyond",
+          "color_Statuario Natural",
+          "color_Terrazzo White",
+          "color_infrequent_sklearn",
+          "img_name_Other",
+          "img_name_infrequent_sklearn"
+        ]
+      }
+    ],
+    "best_model_name": "LogisticRegression",
+    "best_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "dual": false,
+      "fit_intercept": true,
+      "intercept_scaling": 1,
+      "l1_ratio": null,
+      "max_iter": 2000,
+      "multi_class": "deprecated",
+      "n_jobs": null,
+      "penalty": "l2",
+      "random_state": null,
+      "solver": "lbfgs",
+      "tol": 0.0001,
+      "verbose": 0,
+      "warm_start": false
+    },
+    "best_metrics": {
+      "accuracy": 0.0625,
+      "precision_weighted": 0.00390625,
+      "recall_weighted": 0.0625,
+      "f1_weighted": 0.007352941176470588,
+      "precision_macro": 0.0078125,
+      "recall_macro": 0.125,
+      "f1_macro": 0.014705882352941176,
+      "balanced_accuracy": 0.125,
+      "mcc": 0.0,
+      "specificity": 0.0,
+      "confusion_matrix": [
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          7,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "normalized_confusion_matrix": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 0.0625,
+          "recall": 1.0,
+          "f1-score": 0.11764705882352941,
+          "support": 2.0
+        },
+        "1": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 2.0
+        },
+        "3": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1.0
+        },
+        "4": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 10.0
+        },
+        "7": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 3.0
+        },
+        "8": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 4.0
+        },
+        "9": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 3.0
+        },
+        "10": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 7.0
+        },
+        "accuracy": 0.0625,
+        "macro avg": {
+          "precision": 0.0078125,
+          "recall": 0.125,
+          "f1-score": 0.014705882352941176,
+          "support": 32.0
+        },
+        "weighted avg": {
+          "precision": 0.00390625,
+          "recall": 0.0625,
+          "f1-score": 0.007352941176470588,
+          "support": 32.0
+        }
+      },
+      "churn_recall": 0.0,
+      "churn_precision": 0.0,
+      "churn_f1": 0.0
+    },
+    "why_best": "LogisticRegression was selected on churn-aware validation: churn_recall=0.0000, ahead of RandomForestClassifier by +0.0000. Weighted F1=0.0074, macro F1=0.0147.",
+    "feature_names": [
+      "img_url_Other",
+      "img_url_https://www.kajariaceramics.com/images/placeholder/product-placeholder.svg",
+      "img_url_https://www.kajariaceramics.com/storage/product/kpvt00152d.jpg",
+      "img_url_https://www.kajariaceramics.com/storage/product/terrazzo-white.jpg",
+      "img_url_infrequent_sklearn",
+      "texture_Ceramic Wall Tiles",
+      "texture_Glazed Vitrified Tiles",
+      "texture_Gres Tiles",
+      "texture_Polished Vitrified Tiles",
+      "color_Alma Beige",
+      "color_Armani Beige",
+      "color_Armani Grey",
+      "color_Belgium Black",
+      "color_Brazilian Granite",
+      "color_Breccia Arancia",
+      "color_Carrara Gold",
+      "color_Crema Marfil",
+      "color_Desert Gold",
+      "color_Florence Bianco",
+      "color_Gozzio Silver",
+      "color_Italiano Beige",
+      "color_Onyx Carmo",
+      "color_Onyx Pearl",
+      "color_Oslo Blanco",
+      "color_Other",
+      "color_Satuario Luxe Beyond",
+      "color_Statuario Natural",
+      "color_Terrazzo White",
+      "color_infrequent_sklearn",
+      "img_name_Other",
+      "img_name_infrequent_sklearn"
+    ],
+    "raw_feature_names": [
+      "img_url",
+      "texture",
+      "color",
+      "img_name"
+    ],
+    "preprocessing_notes": "Categorical features are imputed and one-hot encoded inside train-fold preprocessing. Numeric features are median-imputed; linear/SVM/KNN models also receive scaling. Identifier columns are removed before this stage. Class imbalance ratio was 35.00; class_weight + train-fold resampling.",
+    "class_imbalance_handled": true,
+    "smote_applied": false,
+    "imbalance_ratio": 35.0,
+    "imbalance_diagnostics": {
+      "ratio": 35.0,
+      "strategy": "class_weight + train-fold resampling",
+      "before": {
+        "0": 19,
+        "1": 5,
+        "2": 1,
+        "3": 1,
+        "4": 35,
+        "5": 7,
+        "6": 2,
+        "7": 9,
+        "8": 7,
+        "9": 11,
+        "10": 31
+      },
+      "after": {
+        "0": 35,
+        "1": 35,
+        "2": 35,
+        "3": 35,
+        "4": 35,
+        "5": 35,
+        "6": 35,
+        "7": 35,
+        "8": 35,
+        "9": 35,
+        "10": 35
+      },
+      "raw_y_train": [
+        2,
+        0,
+        4,
+        10,
+        5,
+        4,
+        7,
+        0,
+        4,
+        10,
+        9,
+        6,
+        10,
+        4,
+        9,
+        4,
+        10,
+        7,
+        0,
+        4,
+        7,
+        9,
+        4,
+        4,
+        8,
+        10,
+        10,
+        4,
+        4,
+        10,
+        4,
+        10,
+        10,
+        7,
+        4,
+        3,
+        0,
+        4,
+        7,
+        0,
+        5,
+        5,
+        9,
+        4,
+        4,
+        0,
+        4,
+        4,
+        6,
+        9,
+        4,
+        0,
+        10,
+        10,
+        10,
+        0,
+        10,
+        5,
+        8,
+        4,
+        8,
+        7,
+        10,
+        5,
+        10,
+        10,
+        10,
+        1,
+        4,
+        10,
+        10,
+        0,
+        4,
+        9,
+        8,
+        4,
+        5,
+        4,
+        4,
+        7,
+        10,
+        0,
+        0,
+        9,
+        10,
+        10,
+        0,
+        4,
+        0,
+        4,
+        1,
+        10,
+        4,
+        4,
+        4,
+        8,
+        10,
+        10,
+        5,
+        1,
+        0,
+        0,
+        10,
+        1,
+        0,
+        9,
+        4,
+        1,
+        10,
+        10,
+        4,
+        10,
+        4,
+        0,
+        10,
+        9,
+        7,
+        4,
+        9,
+        8,
+        8,
+        10,
+        4,
+        7,
+        0,
+        4,
+        0,
+        9
+      ],
+      "message": "Imbalance ratio 35.00; adaptive balancing enabled."
+    },
+    "train_size": 128,
+    "resampled_train_size": 128,
+    "test_size": 32,
+    "scaler_used": "StandardScaler",
+    "model_path": ".storage\\models\\cec83869.pkl",
+    "target_classes": [
+      "120x180 cm",
+      "120x240 cm",
+      "20x20 cm",
+      "30x30 cm",
+      "30x45 cm",
+      "30x60 cm",
+      "40x40 cm",
+      "60x120 cm",
+      "60x60 cm",
+      "80x160 cm",
+      "80x240 cm"
+    ],
+    "positive_class": "120x240 cm",
+    "positive_label": 1,
+    "y_test": [
+      9,
+      0,
+      10,
+      1,
+      3,
+      4,
+      8,
+      0,
+      8,
+      10,
+      4,
+      9,
+      4,
+      7,
+      4,
+      4,
+      10,
+      10,
+      7,
+      4,
+      8,
+      4,
+      4,
+      4,
+      4,
+      10,
+      7,
+      1,
+      10,
+      9,
+      10,
+      8
+    ],
+    "y_pred": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "y_score": [
+      0.015557300024485462,
+      0.014309616567022624,
+      0.006119508394965218,
+      0.09459326403876575,
+      0.02154233077323558,
+      0.002597228788626707,
+      0.015557300024485462,
+      0.09459326403876575,
+      0.02154233077323558,
+      0.006119508394965218,
+      0.016923354284846648,
+      0.09459326403876575,
+      0.016923354284846648,
+      0.20581456051353653,
+      0.002597228788626707,
+      0.002597228788626707,
+      0.009030424967932124,
+      0.012052964307437132,
+      0.015557300024485462,
+      0.016923354284846648,
+      0.09459326403876575,
+      0.016923354284846648,
+      0.016923354284846648,
+      0.002597228788626707,
+      0.002597228788626707,
+      0.001631090380537421,
+      0.02154233077323558,
+      0.1481564709772015,
+      0.006119508394965218,
+      0.015557300024485462,
+      0.009030424967932124,
+      0.09459326403876575
+    ],
+    "holdout_y_true": [
+      9,
+      0,
+      10,
+      1,
+      3,
+      4,
+      8,
+      0,
+      8,
+      10,
+      4,
+      9,
+      4,
+      7,
+      4,
+      4,
+      10,
+      10,
+      7,
+      4,
+      8,
+      4,
+      4,
+      4,
+      4,
+      10,
+      7,
+      1,
+      10,
+      9,
+      10,
+      8
+    ],
+    "holdout_y_pred": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "holdout_y_score": [
+      0.015557300024485462,
+      0.014309616567022624,
+      0.006119508394965218,
+      0.09459326403876575,
+      0.02154233077323558,
+      0.002597228788626707,
+      0.015557300024485462,
+      0.09459326403876575,
+      0.02154233077323558,
+      0.006119508394965218,
+      0.016923354284846648,
+      0.09459326403876575,
+      0.016923354284846648,
+      0.20581456051353653,
+      0.002597228788626707,
+      0.002597228788626707,
+      0.009030424967932124,
+      0.012052964307437132,
+      0.015557300024485462,
+      0.016923354284846648,
+      0.09459326403876575,
+      0.016923354284846648,
+      0.016923354284846648,
+      0.002597228788626707,
+      0.002597228788626707,
+      0.001631090380537421,
+      0.02154233077323558,
+      0.1481564709772015,
+      0.006119508394965218,
+      0.015557300024485462,
+      0.009030424967932124,
+      0.09459326403876575
+    ],
+    "confusion_matrix": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "normalized_confusion_matrix": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "threshold_optimization": {}
+  },
+  "explainability_results": {
+    "status": "success",
+    "global_importance": [
+      {
+        "feature": "color_infrequent_sklearn",
+        "mean_abs_shap": 1.4270380192749792
+      },
+      {
+        "feature": "color_Other",
+        "mean_abs_shap": 0.7785832214222523
+      },
+      {
+        "feature": "color_Armani Grey",
+        "mean_abs_shap": 0.7444352315909943
+      },
+      {
+        "feature": "texture_Polished Vitrified Tiles",
+        "mean_abs_shap": 0.6366763143818936
+      },
+      {
+        "feature": "texture_Glazed Vitrified Tiles",
+        "mean_abs_shap": 0.5481385600528413
+      },
+      {
+        "feature": "color_Alma Beige",
+        "mean_abs_shap": 0.5254429584603456
+      },
+      {
+        "feature": "texture_Ceramic Wall Tiles",
+        "mean_abs_shap": 0.4564233609261885
+      },
+      {
+        "feature": "color_Desert Gold",
+        "mean_abs_shap": 0.40250003765601
+      },
+      {
+        "feature": "color_Belgium Black",
+        "mean_abs_shap": 0.37884123688524
+      },
+      {
+        "feature": "texture_Gres Tiles",
+        "mean_abs_shap": 0.37281794577006044
+      },
+      {
+        "feature": "color_Onyx Pearl",
+        "mean_abs_shap": 0.33045184199070327
+      },
+      {
+        "feature": "color_Crema Marfil",
+        "mean_abs_shap": 0.3023252219389637
+      },
+      {
+        "feature": "img_name_Other",
+        "mean_abs_shap": 0.2901868417790669
+      },
+      {
+        "feature": "img_name_infrequent_sklearn",
+        "mean_abs_shap": 0.28525450260614255
+      },
+      {
+        "feature": "img_url_infrequent_sklearn",
+        "mean_abs_shap": 0.18739594920567848
+      },
+      {
+        "feature": "color_Gozzio Silver",
+        "mean_abs_shap": 0.16370517152201397
+      },
+      {
+        "feature": "color_Italiano Beige",
+        "mean_abs_shap": 0.1534335841540582
+      },
+      {
+        "feature": "color_Satuario Luxe Beyond",
+        "mean_abs_shap": 0.15318370078722415
+      },
+      {
+        "feature": "img_url_https://www.kajariaceramics.com/images/placeholder/product-placeholder.svg",
+        "mean_abs_shap": 0.1516464469750923
+      },
+      {
+        "feature": "color_Oslo Blanco",
+        "mean_abs_shap": 0.15057031411465918
+      },
+      {
+        "feature": "color_Carrara Gold",
+        "mean_abs_shap": 0.14982381894557656
+      },
+      {
+        "feature": "color_Florence Bianco",
+        "mean_abs_shap": 0.14982381894557656
+      },
+      {
+        "feature": "color_Onyx Carmo",
+        "mean_abs_shap": 0.13973460738399743
+      },
+      {
+        "feature": "color_Armani Beige",
+        "mean_abs_shap": 0.12432446432022502
+      },
+      {
+        "feature": "color_Breccia Arancia",
+        "mean_abs_shap": 0.0995769694166164
+      },
+      {
+        "feature": "color_Brazilian Granite",
+        "mean_abs_shap": 0.07997768705624696
+      },
+      {
+        "feature": "img_url_Other",
+        "mean_abs_shap": 0.07666169526549295
+      },
+      {
+        "feature": "img_url_https://www.kajariaceramics.com/storage/product/kpvt00152d.jpg",
+        "mean_abs_shap": 0.05373942916157747
+      },
+      {
+        "feature": "img_url_https://www.kajariaceramics.com/storage/product/terrazzo-white.jpg",
+        "mean_abs_shap": 0.05373942916157747
+      },
+      {
+        "feature": "color_Statuario Natural",
+        "mean_abs_shap": 0.05373942916157747
+      },
+      {
+        "feature": "color_Terrazzo White",
+        "mean_abs_shap": 0.05373942916157747
+      }
+    ],
+    "permutation_importance": [],
+    "top_features": [
+      "color_infrequent_sklearn",
+      "color_Other",
+      "color_Armani Grey",
+      "texture_Polished Vitrified Tiles",
+      "texture_Glazed Vitrified Tiles"
+    ],
+    "plain_english": "Top features by native importance: color_infrequent_sklearn, color_Other, color_Armani Grey, texture_Polished Vitrified Tiles, texture_Glazed Vitrified Tiles.",
+    "global_insights": [
+      {
+        "feature": "color_infrequent_sklearn",
+        "insight": "color infrequent sklearn is a major driver of model decisions and should be reviewed for business validity.",
+        "severity": "HIGH"
+      },
+      {
+        "feature": "color_Other",
+        "insight": "color Other is a major driver of model decisions and should be reviewed for business validity.",
+        "severity": "MEDIUM"
+      },
+      {
+        "feature": "color_Armani Grey",
+        "insight": "color Armani Grey is a major driver of model decisions and should be reviewed for business validity.",
+        "severity": "MEDIUM"
+      },
+      {
+        "feature": "texture_Polished Vitrified Tiles",
+        "insight": "texture Polished Vitrified Tiles is a major driver of model decisions and should be reviewed for business validity.",
+        "severity": "MEDIUM"
+      },
+      {
+        "feature": "texture_Glazed Vitrified Tiles",
+        "insight": "texture Glazed Vitrified Tiles is a major driver of model decisions and should be reviewed for business validity.",
+        "severity": "MEDIUM"
+      }
+    ],
+    "shap_available": false,
+    "warning": "SHAP not installed; using native model importances."
+  },
+  "evaluation_results": {
+    "status": "success",
+    "problem_type": "classification",
+    "roc_curve": {},
+    "precision_recall_curve": {},
+    "threshold_optimization": {},
+    "per_class_metrics": {
+      "0": {
+        "precision": 0.0625,
+        "recall": 1.0,
+        "f1-score": 0.11764705882352941,
+        "support": 2.0
+      },
+      "1": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 2.0
+      },
+      "3": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 1.0
+      },
+      "4": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 10.0
+      },
+      "7": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 3.0
+      },
+      "8": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 4.0
+      },
+      "9": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 3.0
+      },
+      "10": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 7.0
+      },
+      "accuracy": 0.0625,
+      "macro avg": {
+        "precision": 0.0078125,
+        "recall": 0.125,
+        "f1-score": 0.014705882352941176,
+        "support": 32.0
+      },
+      "weighted avg": {
+        "precision": 0.00390625,
+        "recall": 0.0625,
+        "f1-score": 0.007352941176470588,
+        "support": 32.0
+      }
+    },
+    "aggregate_metrics": {
+      "balanced_accuracy": 0.125,
+      "mcc": 0.0,
+      "macro_f1": 0.014705882352941176,
+      "weighted_f1": 0.007352941176470588
+    },
+    "confusion_matrix": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "normalized_confusion_matrix": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "warnings": [],
+    "recommendation": "Minority-class recall is low (0%). Consider threshold optimization or stronger imbalance handling."
+  },
+  "report_results": {
+    "status": "success",
+    "executive_summary": "InsightForge analyzed df_balanced.csv with 160 rows and 5 columns. The workflow identified a classification task and selected LogisticRegression as the strongest model. Minority-class recall was 0.0000; weighted F1 was 0.0074. Data quality scored 100.0/100 after automated cleaning.",
+    "business_insights": [
+      "Data cleaning removed 890 rows and 0 columns.",
+      "Missing value handling fixed 0 cells.",
+      "The best model was LogisticRegression.",
+      "LogisticRegression was selected on churn-aware validation: churn_recall=0.0000, ahead of RandomForestClassifier by +0.0000. Weighted F1=0.0074, macro F1=0.0147.",
+      "Top features by native importance: color_infrequent_sklearn, color_Other, color_Armani Grey, texture_Polished Vitrified Tiles, texture_Glazed Vitrified Tiles.",
+      "The largest class is 45.0x the smallest class."
+    ],
+    "key_findings": [
+      "Data cleaning removed 890 rows and 0 columns.",
+      "Missing value handling fixed 0 cells.",
+      "The best model was LogisticRegression.",
+      "LogisticRegression was selected on churn-aware validation: churn_recall=0.0000, ahead of RandomForestClassifier by +0.0000. Weighted F1=0.0074, macro F1=0.0147.",
+      "Top features by native importance: color_infrequent_sklearn, color_Other, color_Armani Grey, texture_Polished Vitrified Tiles, texture_Glazed Vitrified Tiles.",
+      "The largest class is 45.0x the smallest class."
+    ],
+    "recommendations": [
+      "Tune the classification threshold with business cost assumptions before acting on predictions.",
+      "Track class-level performance because imbalance was detected and adaptive balancing was used during training.",
+      "Validate the selected model on fresh, unseen data before production deployment.",
+      "Monitor data drift and retrain when feature distributions or target balance change materially."
+    ],
+    "risk_analysis": [
+      "Weighted metrics can hide minority-class prediction errors.",
+      "Model quality must be revalidated after data drift or campaign policy changes."
+    ],
+    "deployment_readiness": "Ready for offline stakeholder review; not production-ready until threshold policy, monitoring, and fresh holdout validation are completed.",
+    "model_limitations": [
+      "Historical churn labels may encode past retention policies.",
+      "Correlation and SHAP explanations are directional diagnostics, not causal proof."
+    ],
+    "model_conclusion": "Minority-class recall is low (0%). Consider threshold optimization or stronger imbalance handling.",
+    "data_quality_verdict": "Strong data quality after cleaning.",
+    "next_steps": [
+      "Export the report for stakeholder review.",
+      "Review threshold optimization in Evaluation.",
+      "Schedule a holdout validation pass with new data.",
+      "Investigate business meaning for top feature 'color_infrequent_sklearn'."
+    ]
+  },
+  "problem_type": "classification"
+}

@@ -1,0 +1,13 @@
+{
+  "run_id": "d2b2b8bc",
+  "status": "failed",
+  "error": "All models failed to train. No models trained successfully.",
+  "traceback": "Traceback (most recent call last):\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\orchestrator\\graph.py\", line 200, in run_pipeline\n    final_state = _build_graph(progress_callback).invoke(state)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\sarda\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\langgraph\\pregel\\main.py\", line 3290, in invoke\n    for chunk in self.stream(\n                 ^^^^^^^^^^^^\n  File \"C:\\Users\\sarda\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\langgraph\\pregel\\main.py\", line 2724, in stream\n    for _ in runner.tick(\n             ^^^^^^^^^^^^\n  File \"C:\\Users\\sarda\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\langgraph\\pregel\\_runner.py\", line 167, in tick\n    run_with_retry(\n  File \"C:\\Users\\sarda\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\langgraph\\pregel\\_retry.py\", line 71, in run_with_retry\n    return task.proc.invoke(task.input, config)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\sarda\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\langgraph\\_internal\\_runnable.py\", line 656, in invoke\n    input = context.run(step.invoke, input, config, **kwargs)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\sarda\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\langgraph\\_internal\\_runnable.py\", line 400, in invoke\n    ret = self.func(*args, **kwargs)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend\\orchestrator\\graph.py\", line 126, in ml_node\n    raise RuntimeError(result.get(\"error\", \"Model training failed.\"))\nRuntimeError: All models failed to train. No models trained successfully.\nDuring task with name 'ml_trainer' and id 'fa3f0ecd-20a8-46c7-03cf-aa309ab5a506'\n",
+  "dataset_path": ".storage\\uploads\\d2b2b8bc_attributes_00.csv",
+  "dataset_name": "attributes_00.csv",
+  "created_at": 1778839714.4036562,
+  "goal": "Predict which category of D1V using d2v, file_name, d1p and 1 more features. Find the most important features and identify the best classification model for this dataset.",
+  "ml_results": {},
+  "cleaning_results": {},
+  "plan_results": {}
+}

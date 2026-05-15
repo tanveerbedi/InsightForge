@@ -1,5 +1,6 @@
 # backend/agents/planner.py
 import pandas as pd
+import traceback
 
 
 class PlannerAgent:
@@ -7,9 +8,23 @@ class PlannerAgent:
         try:
             columns = df_info.get("columns", [])
             dtypes = df_info.get("dtypes", {})
-            detected_target = target_col or (columns[-1] if columns else None)
-            dtype = str(dtypes.get(detected_target, "")).lower()
             unique_counts = df_info.get("unique_counts", {})
+            
+            if not target_col:
+                valid_targets = [col for col in columns if unique_counts.get(col, 0) > 1]
+                detected_target = valid_targets[-1] if valid_targets else (columns[-1] if columns else None)
+            else:
+                detected_target = target_col
+                
+            if detected_target and unique_counts.get(detected_target, 0) < 2:
+                return {
+                    "status": "error", 
+                    "error": f"Target column '{detected_target}' has less than 2 unique values. Please provide a valid target column for modeling.",
+                    "plan": [], 
+                    "problem_type": "unknown"
+                }
+
+            dtype = str(dtypes.get(detected_target, "")).lower()
             row_count = max(int(df_info.get("rows", 0) or 0), 1)
             unique_ratio = (unique_counts.get(detected_target, row_count) or row_count) / row_count
 
@@ -70,5 +85,11 @@ class PlannerAgent:
                 "summary": f"Planned a {problem_type} workflow for target '{detected_target}' against the goal: {goal}",
             }
         except Exception as exc:
-            return {"status": "error", "error": str(exc), "plan": [], "problem_type": "unknown"}
+            return {
+                "status": "error", 
+                "error": str(exc), 
+                "traceback": traceback.format_exc(),
+                "plan": [], 
+                "problem_type": "unknown"
+            }
 

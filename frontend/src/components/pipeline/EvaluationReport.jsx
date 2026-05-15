@@ -7,7 +7,7 @@ import SkeletonLoader from '../shared/SkeletonLoader'
 export default function EvaluationReport({ evaluationData, mlData }) {
   if (!evaluationData) return <SkeletonLoader lines={6} height="h-12" />
   if (evaluationData.status === 'error' && !mlData?.best_metrics) return <ErrorCard title="Evaluation failed" message="Model diagnostics could not be generated." detail={evaluationData.error} />
-  const bestMetric = mlData?.problem_type === 'classification' ? mlData?.best_metrics?.f1_weighted : mlData?.best_metrics?.r2
+  const bestMetric = mlData?.problem_type === 'classification' ? mlData?.best_metrics?.churn_recall : mlData?.best_metrics?.r2
   const warnings = evaluationData.status === 'error' ? [evaluationData.error || 'Evaluation metrics were partially unavailable.'] : evaluationData.warnings || []
   const problemType = evaluationData.problem_type || mlData?.problem_type
   return (
@@ -28,8 +28,11 @@ export default function EvaluationReport({ evaluationData, mlData }) {
       {problemType === 'classification' ? (
         <>
           <ClassificationMetrics metrics={evaluationData.per_class_metrics || mlData?.best_metrics?.classification_report || {}} />
-          <ConfusionMatrix matrix={mlData?.confusion_matrix || mlData?.best_metrics?.confusion_matrix || []} />
+          <AggregateMetrics metrics={evaluationData.aggregate_metrics || mlData?.best_metrics || {}} />
+          <ConfusionMatrix matrix={evaluationData.confusion_matrix || mlData?.confusion_matrix || mlData?.best_metrics?.confusion_matrix || []} normalized={evaluationData.normalized_confusion_matrix || mlData?.normalized_confusion_matrix || []} />
           <RocChart curves={evaluationData.roc_curve || {}} />
+          <PrChart curves={evaluationData.precision_recall_curve || {}} />
+          <ThresholdChart optimization={evaluationData.threshold_optimization || mlData?.threshold_optimization || {}} />
         </>
       ) : (
         <RegressionChart points={evaluationData.residual_analysis || []} />
@@ -37,6 +40,27 @@ export default function EvaluationReport({ evaluationData, mlData }) {
       <div className="rounded-lg bg-surface-700 p-5 text-sm text-slate-300">
         Feature importance is available in the Explainability tab when SHAP completes for the selected model.
       </div>
+    </div>
+  )
+}
+
+function AggregateMetrics({ metrics }) {
+  const items = [
+    ['Churn recall', metrics.churn_recall],
+    ['PR-AUC', metrics.pr_auc],
+    ['ROC-AUC', metrics.roc_auc],
+    ['Balanced accuracy', metrics.balanced_accuracy],
+    ['Macro F1', metrics.macro_f1 ?? metrics.f1_macro],
+    ['MCC', metrics.mcc],
+  ]
+  return (
+    <div className="grid gap-3 md:grid-cols-3">
+      {items.map(([label, value]) => (
+        <div key={label} className="rounded-lg bg-surface-700 p-4">
+          <p className="text-xs text-slate-400">{label}</p>
+          <p className="mt-1 text-xl font-semibold text-white">{fmt(value)}</p>
+        </div>
+      ))}
     </div>
   )
 }
@@ -57,6 +81,48 @@ function RocChart({ curves }) {
           <Line type="monotone" dataKey="tpr" stroke="#6366f1" strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
+    </div>
+  )
+}
+
+function PrChart({ curves }) {
+  const entries = Object.entries(curves)
+  const data = entries[0] ? entries[0][1].recall.map((recall, i) => ({ recall, precision: entries[0][1].precision[i] })) : []
+  if (!data.length) return <div className="rounded-lg bg-surface-700 p-5 text-sm text-slate-500">Precision-recall curve is available when probability scores can be computed.</div>
+  return (
+    <div className="rounded-lg bg-surface-700 p-5">
+      <h3 className="mb-4 font-semibold text-white">Precision-Recall Curve</h3>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={data}>
+          <CartesianGrid stroke="#334155" />
+          <XAxis dataKey="recall" domain={[0, 1]} tick={{ fill: '#cbd5e1', fontSize: 12 }} />
+          <YAxis domain={[0, 1]} tick={{ fill: '#cbd5e1', fontSize: 12 }} />
+          <Tooltip formatter={(value) => fmt(Number(value))} labelStyle={{ color: '#0f172a' }} />
+          <Line type="monotone" dataKey="precision" stroke="#10b981" strokeWidth={2} dot={false} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  )
+}
+
+function ThresholdChart({ optimization }) {
+  const data = optimization.points || []
+  if (!data.length) return null
+  return (
+    <div className="rounded-lg bg-surface-700 p-5">
+      <h3 className="mb-4 font-semibold text-white">Threshold Tradeoff</h3>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={data}>
+          <CartesianGrid stroke="#334155" />
+          <XAxis dataKey="threshold" domain={[0, 1]} tick={{ fill: '#cbd5e1', fontSize: 12 }} />
+          <YAxis domain={[0, 1]} tick={{ fill: '#cbd5e1', fontSize: 12 }} />
+          <Tooltip formatter={(value) => fmt(Number(value))} labelStyle={{ color: '#0f172a' }} />
+          <Line type="monotone" dataKey="recall" stroke="#f59e0b" strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="precision" stroke="#6366f1" strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="f1" stroke="#10b981" strokeWidth={2} dot={false} />
+        </LineChart>
+      </ResponsiveContainer>
+      <p className="mt-3 text-sm text-slate-300">Best F1 threshold: {fmt(optimization.best_f1_threshold)} | Recall-oriented threshold: {fmt(optimization.recall_70_threshold)}</p>
     </div>
   )
 }
@@ -102,13 +168,13 @@ function ClassificationMetrics({ metrics }) {
   )
 }
 
-function ConfusionMatrix({ matrix }) {
+function ConfusionMatrix({ matrix, normalized }) {
   if (!matrix?.length) return null
   return (
     <div className="rounded-lg bg-surface-700 p-5">
       <h3 className="mb-4 font-semibold text-white">Confusion Matrix</h3>
       <div className="inline-block overflow-hidden rounded-lg border border-surface-600">
-        {matrix.map((row, i) => <div key={i} className="flex">{row.map((cell, j) => <div key={j} className={`flex h-16 w-16 items-center justify-center border border-surface-600 font-semibold ${i === j ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>{cell}</div>)}</div>)}
+        {matrix.map((row, i) => <div key={i} className="flex">{row.map((cell, j) => <div key={j} className={`flex h-16 w-20 flex-col items-center justify-center border border-surface-600 font-semibold ${i === j ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}><span>{cell}</span><span className="text-[10px] font-normal">{fmt(normalized?.[i]?.[j])}</span></div>)}</div>)}
       </div>
     </div>
   )

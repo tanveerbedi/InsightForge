@@ -1,8 +1,7 @@
 // frontend/src/api/history.js
-import client from './client'
+import api from './axios'
 
-export const getHistory = () => client.get('/history').then((r) => r.data)
+export const getHistory = () => api.get('/api/history').then((r) => r.data)
 
 export const deleteRun = (runId) =>
-  client.delete(`/history/${runId}`).then((r) => r.data)
-
+  api.delete(`/api/history/${runId}`).then((r) => r.data)

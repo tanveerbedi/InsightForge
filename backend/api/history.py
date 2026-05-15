@@ -9,7 +9,7 @@ router = APIRouter()
 
 @router.get("/")
 def history():
-    runs_dir = Path("./storage/runs")
+    runs_dir = Path("./.storage/runs")
     runs_dir.mkdir(parents=True, exist_ok=True)
     results = []
     for f in runs_dir.glob("*.json"):
@@ -34,7 +34,7 @@ def history():
 
 @router.delete("/{run_id}")
 def delete_history(run_id: str):
-    path = Path(f"./storage/runs/{run_id}.json")
+    path = Path(f"./.storage/runs/{run_id}.json")
     if path.exists():
         path.unlink()
     return {"deleted": True}

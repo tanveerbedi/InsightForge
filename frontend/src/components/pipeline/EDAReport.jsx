@@ -37,6 +37,11 @@ export default function EDAReport({ edaData }) {
       <div className="grid gap-4 md:grid-cols-2">
         {(edaData.insights || []).map((insight, i) => <Insight key={i} insight={insight} />)}
       </div>
+      <div className="grid gap-4 lg:grid-cols-3">
+        <MiniTable title="Top Mutual Information" rows={(edaData.mutual_information || []).slice(0, 6)} columns={['feature', 'score']} />
+        <MiniTable title="Highest Cardinality" rows={(edaData.cardinality || []).slice(0, 6)} columns={['column', 'unique_ratio']} />
+        <MiniTable title="Outlier Flags" rows={Object.entries(edaData.outliers || {}).map(([column, v]) => ({ column, outlier_pct: v.outlier_pct })).slice(0, 6)} columns={['column', 'outlier_pct']} />
+      </div>
       <div className="grid gap-6 lg:grid-cols-2">
         <ChartCard title="Correlation Matrix"><ChartRenderer chart={edaData.charts?.correlation_matrix} title="Correlation Matrix" /></ChartCard>
         <ChartCard title="Box Plots"><ChartRenderer chart={edaData.charts?.boxplots} title="Box Plots" /></ChartCard>
@@ -59,6 +64,29 @@ export default function EDAReport({ edaData }) {
   )
 }
 
+function MiniTable({ title, rows, columns }) {
+  return (
+    <div className="rounded-lg bg-surface-700 p-5">
+      <h3 className="mb-3 font-semibold text-white">{title}</h3>
+      {rows?.length ? (
+        <table className="w-full text-left text-xs">
+          <tbody>
+            {rows.map((row, index) => (
+              <tr key={index} className="border-t border-surface-600">
+                {columns.map((col) => <td key={col} className="py-2 pr-2 text-slate-300">{formatCell(row[col])}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : <p className="text-sm text-slate-500">No flags</p>}
+    </div>
+  )
+}
+
+function formatCell(value) {
+  return typeof value === 'number' ? value.toFixed(4) : value ?? '-'
+}
+
 function Pill({ label, value }) {
   return <div className="rounded-lg bg-surface-700 p-4"><p className="text-xs text-slate-400">{label}</p><p className="mt-1 text-lg font-semibold text-white">{value}</p></div>
 }
@@ -79,4 +107,3 @@ function Insight({ insight }) {
     </div>
   )
 }
-

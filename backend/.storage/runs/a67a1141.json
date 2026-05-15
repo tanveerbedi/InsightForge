@@ -1,0 +1,9 @@
+{
+  "run_id": "a67a1141",
+  "status": "failed",
+  "error": "No models trained successfully.",
+  "dataset_path": "storage\\uploads\\a67a1141_eci_results_tamilnadu_2026.csv",
+  "dataset_name": "eci_results_tamilnadu_2026.csv",
+  "created_at": 1778650444.4707463,
+  "goal": "Analyze the election results and generate a complete summary including winners, party-wise vote totals, vote share percentages, close contests, and overall trends."
+}

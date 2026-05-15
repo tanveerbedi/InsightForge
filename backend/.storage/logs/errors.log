@@ -1,0 +1,347 @@
+2026-05-13 11:19:58,365 - [ERROR] - Pipeline error_run_id failed: 'NoneType' object has no attribute 'shape'
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 197, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 3290, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 2724, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_retry.py", line 71, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 83, in plan_node
+    result = planner.run(state["goal"], dataframe_info(state["df"]), state.get("target_col"))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\tools\data_tools.py", line 7, in dataframe_info
+    "rows": int(df.shape[0]),
+                ^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'shape'
+During task with name 'planner' and id 'e2097b9b-3964-ab36-3dd3-97d36fb6767c'
+
+2026-05-13 11:22:09,027 - [ERROR] - Pipeline 74a85f65 failed: Target column 'Last Updated Date' has less than 2 unique values. Please provide a valid target column for modeling.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 197, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 3309, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 2736, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_retry.py", line 126, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 85, in plan_node
+    raise RuntimeError(result.get("error", "Planner failed."))
+RuntimeError: Target column 'Last Updated Date' has less than 2 unique values. Please provide a valid target column for modeling.
+During task with name 'planner' and id 'b452012d-667a-750c-100b-b97044df1f00'
+
+2026-05-13 11:25:02,986 - [ERROR] - Pipeline ab593243 failed: boolean value of NA is ambiguous
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 197, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 3309, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 2736, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_retry.py", line 126, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 142, in explain_node
+    X_train, X_test, _, _ = train_test_split(X, y, test_size=0.2, random_state=42, stratify=stratify)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\utils\_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\model_selection\_split.py", line 2945, in train_test_split
+    train, test = next(cv.split(X=arrays[0], y=stratify))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\model_selection\_split.py", line 2434, in split
+    y = check_array(y, input_name="y", ensure_2d=False, dtype=None)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\utils\validation.py", line 1074, in check_array
+    _assert_all_finite(
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\utils\validation.py", line 117, in _assert_all_finite
+    if _object_dtype_isnan(X).any():
+       ^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\sklearn\utils\fixes.py", line 54, in _object_dtype_isnan
+    return X != X
+           ^^^^^^
+  File "pandas/_libs/missing.pyx", line 415, in pandas._libs.missing.NAType.__bool__
+TypeError: boolean value of NA is ambiguous
+During task with name 'explainer' and id '4f778bff-063a-49bd-24b7-eaa7c9dd1765'
+
+2026-05-13 11:41:26,237 - [ERROR] - Pipeline 23d41dae failed: No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 197, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 3290, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 2724, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_retry.py", line 71, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: No models trained successfully.
+During task with name 'ml_trainer' and id '20971fcf-d1b0-0d06-d824-dd58181dd378'
+
+2026-05-13 11:42:15,932 - [ERROR] - Pipeline 72fc1ba0 failed: No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 197, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 3290, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 2724, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_retry.py", line 71, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: No models trained successfully.
+During task with name 'ml_trainer' and id '0a1372eb-a89f-6b6d-7106-b6f2859b3b89'
+
+2026-05-13 13:07:45,316 - [ERROR] - Pipeline 569413b6 failed: No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 197, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 3309, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 2736, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_retry.py", line 126, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: No models trained successfully.
+During task with name 'ml_trainer' and id '0181ade3-8966-4492-7d5d-6f853e46f010'
+
+2026-05-13 13:09:28,911 - [ERROR] - Pipeline fc9dd274 failed: No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 197, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 3309, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 2736, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_retry.py", line 126, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: No models trained successfully.
+During task with name 'ml_trainer' and id '12ee704f-5829-0606-5ace-98f511b80b69'
+
+2026-05-13 13:52:39,396 - [ERROR] - Pipeline 94bb76e3 failed: No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 200, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 3309, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 2736, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_retry.py", line 126, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: No models trained successfully.
+During task with name 'ml_trainer' and id '0d9d2b1a-5bbe-2ab1-7c18-e41f6af72657'
+
+2026-05-13 13:53:11,290 - [ERROR] - Pipeline 862f1e05 failed: No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 200, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 3309, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 2736, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_retry.py", line 126, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: No models trained successfully.
+During task with name 'ml_trainer' and id 'a26eaae2-c204-e0d9-c997-574f3ff8ff60'
+
+2026-05-13 14:15:36,438 - [ERROR] - Pipeline bef13f91 failed: No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 200, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 3309, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\main.py", line 2736, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\pregel\_retry.py", line 126, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: No models trained successfully.
+During task with name 'ml_trainer' and id '968a455f-61fb-dc40-25a4-3bd826b1106b'
+
+2026-05-15 15:38:35,589 - [ERROR] - Pipeline d2b2b8bc failed: All models failed to train. No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 200, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 3290, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 2724, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_retry.py", line 71, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: All models failed to train. No models trained successfully.
+During task with name 'ml_trainer' and id 'fa3f0ecd-20a8-46c7-03cf-aa309ab5a506'
+
+2026-05-15 15:38:56,239 - [ERROR] - Pipeline ae503557 failed: All models failed to train. No models trained successfully.
+Traceback (most recent call last):
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 200, in run_pipeline
+    final_state = _build_graph(progress_callback).invoke(state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 3290, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\main.py", line 2724, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\pregel\_retry.py", line 71, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\orchestrator\graph.py", line 126, in ml_node
+    raise RuntimeError(result.get("error", "Model training failed."))
+RuntimeError: All models failed to train. No models trained successfully.
+During task with name 'ml_trainer' and id '5b4a623a-f22e-f9fa-28a6-6b60beb41ef9'
+

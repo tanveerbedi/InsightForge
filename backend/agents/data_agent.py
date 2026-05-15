@@ -1,7 +1,9 @@
 # backend/agents/data_agent.py
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
+import traceback
+
+from utils.ml_preprocessing import detect_identifier_columns, normalize_raw_frame
 
 
 class DataCleaningAgent:
@@ -13,28 +15,16 @@ class DataCleaningAgent:
             original_duplicates = int(cleaned.duplicated().sum())
             original_cells = max(int(cleaned.shape[0] * cleaned.shape[1]), 1)
             cleaning_log = []
-            encoders = {}
             original_types = {col: str(dtype) for col, dtype in cleaned.dtypes.items()}
 
+            cleaned, normalize_log, normalization_stats = normalize_raw_frame(cleaned, target_col)
+            cleaning_log.extend(normalize_log)
+
             missing_pct_by_col = cleaned.isna().mean()
-            drop_cols = missing_pct_by_col[missing_pct_by_col > 0.7].index.tolist()
+            drop_cols = [col for col in missing_pct_by_col[missing_pct_by_col > 0.7].index.tolist() if col != target_col]
             if drop_cols:
                 cleaned = cleaned.drop(columns=drop_cols)
                 cleaning_log.append(f"Dropped {len(drop_cols)} columns with more than 70% missing values: {', '.join(drop_cols)}")
-
-            for col in cleaned.columns:
-                if pd.api.types.is_numeric_dtype(cleaned[col]):
-                    missing = int(cleaned[col].isna().sum())
-                    if missing:
-                        cleaned[col] = cleaned[col].fillna(cleaned[col].median())
-                        cleaning_log.append(f"Filled {missing} missing numeric values in '{col}' with median.")
-                else:
-                    missing = int(cleaned[col].isna().sum())
-                    if missing:
-                        mode = cleaned[col].mode(dropna=True)
-                        fill_value = mode.iloc[0] if not mode.empty else "Unknown"
-                        cleaned[col] = cleaned[col].fillna(fill_value)
-                        cleaning_log.append(f"Filled {missing} missing categorical values in '{col}' with mode.")
 
             before_dupes = len(cleaned)
             cleaned = cleaned.drop_duplicates()
@@ -42,15 +32,13 @@ class DataCleaningAgent:
             if duplicates_removed:
                 cleaning_log.append(f"Removed {duplicates_removed} exact duplicate rows.")
 
-            for col in cleaned.select_dtypes(include=["object", "string"]).columns:
-                cleaned[col] = cleaned[col].astype(str).str.strip()
-                cleaning_log.append(f"Stripped leading and trailing whitespace from '{col}'.")
-
-            for col in cleaned.select_dtypes(include=["object", "string", "category", "bool"]).columns:
-                encoder = LabelEncoder()
-                cleaned[col] = encoder.fit_transform(cleaned[col].astype(str))
-                encoders[col] = encoder
-                cleaning_log.append(f"Label encoded categorical column '{col}' with {len(encoder.classes_)} classes.")
+            identifier_columns = detect_identifier_columns(cleaned, target_col)
+            if identifier_columns:
+                for identifier in identifier_columns:
+                    cleaning_log.append(
+                        f"Dropped identifier column: {identifier.column} (unique ratio: {identifier.unique_ratio:.1f})"
+                    )
+                cleaned = cleaned.drop(columns=[identifier.column for identifier in identifier_columns])
 
             zero_variance_cols = [
                 col for col in cleaned.columns if cleaned[col].nunique(dropna=False) <= 1 and col != target_col
@@ -70,6 +58,13 @@ class DataCleaningAgent:
             if not cleaning_log:
                 cleaning_log.append("Dataset already met cleaning requirements; no structural changes were needed.")
 
+            # FINAL SAFETY PASS: Ensure no string[python] or pd.NA leak into later pipeline steps
+            for col in cleaned.select_dtypes(include=["string"]).columns:
+                cleaned[col] = cleaned[col].astype(object)
+            for col in cleaned.select_dtypes(include=["boolean"]).columns:
+                cleaned[col] = cleaned[col].astype(bool)
+            cleaned = cleaned.replace({pd.NA: np.nan})
+
             return {
                 "status": "success",
                 "cleaned_df": cleaned,
@@ -81,12 +76,19 @@ class DataCleaningAgent:
                 "duplicates_removed": int(duplicates_removed),
                 "data_quality_score": round(data_quality_score, 2),
                 "cleaning_log": cleaning_log,
+                "identifier_columns": [
+                    {
+                        "column": identifier.column,
+                        "unique_ratio": round(identifier.unique_ratio, 4),
+                        "reason": identifier.reason,
+                    }
+                    for identifier in identifier_columns
+                ],
+                "normalization_stats": normalization_stats,
                 "column_types": {
                     col: {"original": original_types.get(col, "unknown"), "cleaned": str(dtype)}
                     for col, dtype in cleaned.dtypes.items()
                 },
-                "encoders": encoders,
             }
         except Exception as exc:
-            return {"status": "error", "error": str(exc)}
-
+            return {"status": "error", "error": str(exc), "traceback": traceback.format_exc()}

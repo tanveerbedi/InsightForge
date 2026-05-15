@@ -1,0 +1,204 @@
+INFO:     Will watch for changes in these directories: ['F:\\Netsmartz\\DS_Agentic_AI\\InsightForge\\backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [43832] using WatchFiles
+INFO:     Started server process [4508]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.2.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.0) doesn't match a supported version!
+  warnings.warn(
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+2026-05-15 02:14:16.078214: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-05-15 02:14:25.713704: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING:tensorflow:From C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+WARNING:  WatchFiles detected changes in 'agents\chat_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for connections to close. (CTRL+C to force quit)
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4508]
+WARNING:  WatchFiles detected changes in 'api\chat.py'. Reloading...
+INFO:     Started server process [27556]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    Traceback (most recent call last):
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 701, in lifespan
+    await receive()
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+INFO:     Started server process [29684]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'agents\chat_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for connections to close. (CTRL+C to force quit)
+C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.2.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.0) doesn't match a supported version!
+  warnings.warn(
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29684]
+INFO:     Started server process [34896]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.2.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.0) doesn't match a supported version!
+  warnings.warn(
+2026-05-15 11:17:04.511786: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-05-15 11:17:06.466952: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING:tensorflow:From C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+WARNING:  WatchFiles detected changes in 'agents\explainability_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [34896]
+WARNING:  WatchFiles detected changes in 'agents\explainability_agent.py'. Reloading...
+INFO:     Started server process [11236]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    Traceback (most recent call last):
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 701, in lifespan
+    await receive()
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+INFO:     Started server process [45208]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.2.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.0) doesn't match a supported version!
+  warnings.warn(
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+2026-05-15 15:38:33.075083: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+2026-05-15 15:38:38.535544: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING:tensorflow:From C:\Users\sarda\AppData\Local\Programs\Python\Python312\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: FutureWarning: errors='ignore' is deprecated and will raise in a future version. Use to_datetime without passing `errors` and catch exceptions explicitly instead
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')
+F:\Netsmartz\DS_Agentic_AI\InsightForge\backend\utils\ml_preprocessing.py:66: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  parsed = pd.to_datetime(cleaned[col], errors='ignore')

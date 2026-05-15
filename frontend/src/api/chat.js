@@ -1,6 +1,5 @@
 // frontend/src/api/chat.js
-import client from './client'
+import api from './axios'
 
 export const sendMessage = (runId, question, history) =>
-  client.post(`/chat/${runId}`, { question, history }).then((r) => r.data)
-
+  api.post(`/api/chat/${runId}`, { question, history }).then((r) => r.data)

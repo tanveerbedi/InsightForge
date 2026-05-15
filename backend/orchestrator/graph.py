@@ -1,11 +1,31 @@
 # backend/orchestrator/graph.py
 import json
+import logging
 import time
+import traceback
 from pathlib import Path
 from typing import Any, TypedDict
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
+
+log_dir = Path("./.storage/logs")
+log_dir.mkdir(parents=True, exist_ok=True)
+
+logger = logging.getLogger("pipeline")
+logger.setLevel(logging.DEBUG)
+
+if not logger.handlers:
+    pl = logging.FileHandler(log_dir / "pipeline.log", encoding="utf-8")
+    pl.setLevel(logging.INFO)
+    pl.setFormatter(logging.Formatter("%(asctime)s - [%(levelname)s] - %(message)s"))
+    logger.addHandler(pl)
+
+    el = logging.FileHandler(log_dir / "errors.log", encoding="utf-8")
+    el.setLevel(logging.ERROR)
+    el.setFormatter(logging.Formatter("%(asctime)s - [%(levelname)s] - %(message)s"))
+    logger.addHandler(el)
+
 
 from agents.data_agent import DataCleaningAgent
 from agents.eda_agent import EDAAgent
@@ -119,8 +139,11 @@ def _build_graph(progress_callback=None):
             X = state["cleaned_df"].drop(columns=[state["target_col"]])
             y = state["cleaned_df"][state["target_col"]]
             stratify = y if state["problem_type"] == "classification" and y.nunique() > 1 else None
-            X_train, X_test, _, _ = train_test_split(X, y, test_size=0.2, random_state=42, stratify=stratify)
-            state["explainability_results"] = explainer.run(ml.get("model_path"), X_train, X_test, ml.get("feature_names", X.columns.tolist()), ml.get("best_model_name"), state["problem_type"])
+            try:
+                X_train, X_test, _, _ = train_test_split(X, y, test_size=0.2, random_state=42, stratify=stratify)
+            except ValueError:
+                X_train, X_test, _, _ = train_test_split(X, y, test_size=0.2, random_state=42)
+            state["explainability_results"] = explainer.run(ml.get("model_path"), X_train, X_test, ml.get("raw_feature_names", X.columns.tolist()), ml.get("best_model_name"), state["problem_type"])
         _notify(progress_callback, "explainer", "done", "Explainability completed.")
         return state
 
@@ -173,6 +196,7 @@ def run_pipeline(df, goal, target_col, selected_models, user_params, fast_mode, 
         "status": "running",
     }
     try:
+        logger.info(f"Starting pipeline {run_id} for dataset {dataset_name}. Target: {target_col}")
         final_state = _build_graph(progress_callback).invoke(state)
         final_state["dataset_path"] = dataset_path
         final_state["dataset_name"] = dataset_name
@@ -180,14 +204,29 @@ def run_pipeline(df, goal, target_col, selected_models, user_params, fast_mode, 
         final_state["goal"] = goal
         final_state["run_id"] = run_id
         serializable = make_serializable({k: v for k, v in final_state.items() if k not in {"df", "cleaned_df"}})
-        runs_dir = Path("./storage/runs")
+        runs_dir = Path("./.storage/runs")
         runs_dir.mkdir(parents=True, exist_ok=True)
         (runs_dir / f"{run_id}.json").write_text(json.dumps(serializable, indent=2), encoding="utf-8")
         _notify(progress_callback, "pipeline", "completed", "Pipeline completed successfully.")
+        logger.info(f"Pipeline {run_id} completed successfully.")
         return serializable
     except Exception as exc:
-        error_state = make_serializable({"run_id": run_id, "status": "failed", "error": str(exc), "dataset_path": dataset_path, "dataset_name": dataset_name, "created_at": state["created_at"], "goal": goal})
-        Path("./storage/runs").mkdir(parents=True, exist_ok=True)
-        Path(f"./storage/runs/{run_id}.json").write_text(json.dumps(error_state, indent=2), encoding="utf-8")
+        tb = traceback.format_exc()
+        logger.error(f"Pipeline {run_id} failed: {exc}\n{tb}")
+        error_state = make_serializable({
+            "run_id": run_id, 
+            "status": "failed", 
+            "error": str(exc), 
+            "traceback": tb,
+            "dataset_path": dataset_path, 
+            "dataset_name": dataset_name, 
+            "created_at": state["created_at"], 
+            "goal": goal,
+            "ml_results": state.get("ml_results", {}),
+            "cleaning_results": state.get("cleaning_results", {}),
+            "plan_results": state.get("plan_results", {})
+        })
+        Path("./.storage/runs").mkdir(parents=True, exist_ok=True)
+        Path(f"./.storage/runs/{run_id}.json").write_text(json.dumps(error_state, indent=2), encoding="utf-8")
         _notify(progress_callback, "pipeline", "error", str(exc))
         return error_state

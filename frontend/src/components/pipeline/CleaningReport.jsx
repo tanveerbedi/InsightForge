@@ -53,6 +53,18 @@ export default function CleaningReport({ cleaningData }) {
           ) : null}
         </div>
       </div>
+      {cleaningData.identifier_columns?.length ? (
+        <div className="rounded-lg border border-emerald-400/30 bg-emerald-500/10 p-5">
+          <h3 className="font-semibold text-white">Leakage Prevention</h3>
+          <div className="mt-3 grid gap-3 md:grid-cols-2">
+            {cleaningData.identifier_columns.map((item) => (
+              <div key={item.column} className="rounded-lg bg-surface-800 p-3 text-sm text-slate-300">
+                <span className="font-semibold text-emerald-200">{item.column}</span> dropped, unique ratio {Number(item.unique_ratio).toFixed(4)}
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
       <div className="overflow-hidden rounded-lg bg-white border border-slate-200">
         <table className="w-full text-left text-sm">
           <thead className="bg-slate-50 border-b border-slate-200">
